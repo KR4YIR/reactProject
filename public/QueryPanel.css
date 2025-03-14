@@ -1,0 +1,223 @@
+/* QueryPanel.css */
+.query-panel-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  
+  .query-panel-overlay.panel-open {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .query-panel-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    background-color: hsla(207, 100%, 10%, 0.905);
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    max-width: 900px;
+    height: 80%;
+    max-height: 700px;
+    z-index: 1001;
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  
+  .query-panel-container.panel-open {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  
+  .query-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid #303030;
+  }
+  
+  .query-panel-header h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: whitesmoke;
+  }
+  
+  .query-panel-close-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: rgb(220, 220, 220);
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  
+  .query-panel-close-btn:hover {
+    background-color: #f5f5f5;
+    color: #333;
+  }
+  
+  .query-panel-body {
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  /* Tablo Stilleri */
+  .table-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  
+  .search-input {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1px solid #282828;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  
+
+  .table-container {
+    flex: 1;
+    overflow: auto;
+    border: 1px solid #323232;
+    background-color: hsla(207, 100%, 10%);
+    border-radius: 4px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  table th,
+  table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid rgb(0, 60, 110);
+    color: whitesmoke;
+  }
+  
+  table th {
+    background-color: hsl(207, 100%, 10%);
+    font-weight: 600;
+    color: whitesmoke;
+    position: sticky;
+    top: 0;
+    
+  }
+  
+  table tr:hover {
+    background-color: hsl(207, 100%, 13%);
+
+  }
+  
+  table tr:nth-child(even) {
+    background-color: hsl(207, 100%, 11%);
+  }
+  table tr:nth-child(even):hover {
+    background-color: hsl(207, 100%, 13%);
+
+  }
+  
+  .edit-btn, 
+  .delete-btn {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    margin-right: 5px;
+    text-align: right;
+   
+  }
+  
+  .edit-btn {
+    background-color: hsl(0, 0%, 28%);
+    color: white;
+  }
+  
+  .delete-btn {
+    background-color: hsl(0, 38%, 25%);
+    color: white;
+  }
+  
+  .edit-btn:hover {
+    background-color: hsl(237, 86%, 64%);
+  }
+  
+  .delete-btn:hover {
+    background-color: #d33426;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 15px;
+  }
+  
+  .pagination button {
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+  }
+  
+  .pagination button:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .pagination span {
+    color: #666;
+    font-size: 14px;
+  }
+  
+  /* Mobil için responsive düzenlemeler */
+  @media (max-width: 768px) {
+    .query-panel-container {
+      width: 95%;
+      height: 90%;
+    }
+    
+    .table-actions {
+      flex-direction: column;
+    }
+    
+    .search-input {
+      margin-bottom: 10px;
+    }
+  }
+  .table-container td {
+    white-space: nowrap; /* Prevents the text from wrapping */
+    overflow: hidden; /* Hides the overflowing text */
+    text-overflow: ellipsis; /* Adds the ellipsis */
+    max-width: 150px; /* Sets the maximum width for the cell */
+}

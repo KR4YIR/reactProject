@@ -1,0 +1,15 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none">
+    
+    <!-- I Harfi -->
+    <rect x="50" y="50" width="20" height="100" fill="#00CCFF"/>
+    <!-- B Harfi -->
+    <rect x="90" y="50" width="20" height="100" fill="#00CCFF"/>
+    <circle cx="110" cy="75" r="25" fill="none" stroke="#00CCFF" stroke-width="10"/>
+    <circle cx="110" cy="125" r="25" fill="none" stroke="#00CCFF" stroke-width="10"/>
+    
+    <!-- Gölge Efekti -->
+    <rect x="55" y="55" width="20" height="100" fill="#0088AA" opacity="0.5"/>
+    <rect x="95" y="55" width="20" height="100" fill="#0088AA" opacity="0.5"/>
+    <circle cx="115" cy="80" r="25" fill="none" stroke="#0088AA" stroke-width="10" opacity="0.5"/>
+    <circle cx="115" cy="130" r="25" fill="none" stroke="#0088AA" stroke-width="10" opacity="0.5"/>
+</svg>

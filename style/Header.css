@@ -1,0 +1,25 @@
+.Header h1{
+    margin: 0;  
+    font-size: 30px;
+    color: white;
+}
+h1:hover{
+    cursor: pointer;
+    border-radius: 10px;
+}
+.Header{
+    background-color: hsla(207, 100%, 10%, 0.816);
+    text-decoration: none;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 65px;
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+}
+
+.Header .button button{
+margin-left: 7px;
+}
