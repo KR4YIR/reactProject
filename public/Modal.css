@@ -1,0 +1,38 @@
+/* Modal.css */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  button{
+    margin-right: 10px;
+  }
+  .carpi-buton{
+    text-align: right;
+  }
+  .edit-butonlari{
+    text-align: right;
+  }
+  .elements{
+    white-space: nowrap; /* Prevents the text from wrapping */
+    overflow: hidden; /* Hides the overflowing text */
+    text-overflow: ellipsis; /* Adds the ellipsis */
+    max-width: 300px; /* Sets the maximum width for the cell */
+
+  }

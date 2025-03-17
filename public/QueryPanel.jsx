@@ -5,18 +5,21 @@ import zoomToFeature from '../src/utils/zoomToFeature';
 import { getMap } from '../src/initMap';
 import { deleteFeature } from '../src/redux/objectSlice';
 import { toast } from 'react-toastify'; // Bildirimi içe aktarın
-
+import DetailsPanel from './DetailsPanel';
+import DuzenlePaneli from './duzenlePaneli';
+import { setFeature } from '../src/redux/featureSlice';
 //import { zoomToFeature } from '../src/zoomToFeature';
 const QueryPanel = ({ isOpen, onClose }) => {
     const dispatch = useDispatch();
-
-    // Directly access tableDataApi from your Redux store using useSelector
-  const { objects } = useSelector(state => state.object);
-  //console.log(objects);
+    const detailsPanel = new DetailsPanel();
+    const { objects } = useSelector(state => state.object);
     const [animationClass, setAnimationClass] = useState('');
     const panelRef = useRef(null);
+    const [isDuzenlePaneliOpen, setIsDuzenlePaneliOpen] = useState(false);
 
-
+   
+    
+    
     useEffect(() => {
         if (isOpen) {
             setAnimationClass('panel-open');
@@ -27,18 +30,18 @@ const QueryPanel = ({ isOpen, onClose }) => {
         }
     }, [isOpen]);
 
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (panelRef.current && !panelRef.current.contains(event.target) && isOpen) {
-                onClose();
-            }
-        };
+    // useEffect(() => {
+    //     const handleClickOutside = (event) => {
+    //         if (panelRef.current && !panelRef.current.contains(event.target) && isOpen) {
+    //             onClose();
+    //         }
+    //     };
 
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, [isOpen, onClose]);
+    //     document.addEventListener('mousedown', handleClickOutside);
+    //     return () => {
+    //         document.removeEventListener('mousedown', handleClickOutside);
+    //     };
+    // }, [isOpen, onClose]);
 
     if (!isOpen && animationClass !== 'panel-open') return null;
 
@@ -46,7 +49,17 @@ const QueryPanel = ({ isOpen, onClose }) => {
     
     const handleEdit = (id) => {
         console.log(`Düzenleniyor: ${id}`);
-        // Add edit functionality here
+        const feature = objects.find(obj => obj.id === id);
+        if (feature) {
+            // Show panel with the feature data
+            //detailsPanel.show(feature, 'Selected Feature Details')
+            setIsDuzenlePaneliOpen(true)
+            console.log("dispatchoncesi " + feature)
+            console.log(feature)
+            dispatch(setFeature(feature))
+            //onClose();
+
+        }
     };
 
     const handleDelete = (id) => {
@@ -76,6 +89,7 @@ const QueryPanel = ({ isOpen, onClose }) => {
         onClose();
     };
     return (
+    <>
         <div className={`query-panel-overlay ${animationClass}`}>
             <div
                 className={`query-panel-container ${animationClass}`}
@@ -134,7 +148,14 @@ const QueryPanel = ({ isOpen, onClose }) => {
                     </div>
                 </div>
             </div>
+            
         </div>
+        <DuzenlePaneli 
+            isOpen={isDuzenlePaneliOpen} 
+            onClose={() => setIsDuzenlePaneliOpen(false)} 
+           
+        />
+    </>    
     );
 };
 

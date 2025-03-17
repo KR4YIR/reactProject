@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import '../style/Header.css';
 import AddPointPanel from '../public/AddPointPanel';
-import QueryPanel from '../public/queryPanel';
+import QueryPanel from '../public/QueryPanel';
 import enableDrawMode from './utils/enableDrawMode';
 import { useDispatch } from 'react-redux';
 function Header() {
@@ -9,7 +9,8 @@ function Header() {
 
   const [isQueryPanelOpen, setIsQueryPanelOpen] = useState(false);
   const [isAddPointPanelOpen, setIsAddPointPanelOpen] = useState(false);
-
+ 
+  
   return (
     <header>
       <div className='Header'>
@@ -18,7 +19,7 @@ function Header() {
         <button onClick={() => enableDrawMode('Point', dispatch, setIsAddPointPanelOpen)}>Add Point</button>
         <button onClick={() => enableDrawMode('LineString', dispatch, setIsAddPointPanelOpen)}>Add Linestring</button>
         <button onClick={() => enableDrawMode('Polygon', dispatch, setIsAddPointPanelOpen)}>Add Polygon</button>
-          <button onClick={() => setIsQueryPanelOpen(true)}>Tablo Göster</button>
+        <button onClick={() => setIsQueryPanelOpen(true)}>Query Panel</button>
         </div>
       </div>
 
@@ -35,6 +36,8 @@ function Header() {
         isOpen={isQueryPanelOpen} 
         onClose={() => setIsQueryPanelOpen(false)} 
       />
+
+      
     </header>
   );
 }

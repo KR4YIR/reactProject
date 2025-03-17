@@ -15,9 +15,7 @@ const wktSlice = createSlice({
       state.wktData = null;
       state.name = null;
     },
-    setName(state, action) {
-      state.name = action.payload;
-    },
+    
   },
 });
 

@@ -1,4 +1,3 @@
-import AddPointPanel from '../../public/AddPointPanel';
 import { getMap } from '../initMap';
 import { Draw } from 'ol/interaction';
 import {vectorSource} from '../initMap';
@@ -58,7 +57,6 @@ function enableDrawMode(type,dispatch,openPanel) {
             wkt = `POLYGON((${coords.join(', ')}))`;
         }
         //panele yollayacaz sonra da paneli redux http istegiyle veri tabanina 
-        console.log("deger alindi wkt degeri !!!: "+wkt);
         dispatch(setWkt({ wktData: wkt, name: null })); // Eğer name henüz yoksa null olarak geçilebilir
         
         //addpointpanel

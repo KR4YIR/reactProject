@@ -11,7 +11,6 @@ const AddPointPanel = ({ isOpen, onClose, title, position = 'right'}) => {
   const [pointName, setPointName] = useState('');
 
   const wkt = useSelector(state => state.wkt.wktData); // Redux Store'dan WKT alınıyor
-  console.log(wkt,"wkt degeri globalden alindi");
   // Handle panel open/close animation
   useEffect(() => {
     if (isOpen) {
@@ -60,7 +59,6 @@ const AddPointPanel = ({ isOpen, onClose, title, position = 'right'}) => {
     };
     setPointName('');
     event.preventDefault();
-    console.log('feature: ', featureData);
     // Add your save logic here
     //addpoint
     dispatch(addFeature(featureData));

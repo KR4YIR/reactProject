@@ -1,0 +1,112 @@
+/* DetailsPanel.css */
+
+/* Panel ana konteyneri */
+.details-panel {
+    position: fixed;
+    top: 10%;
+    right: 10%;
+    width: 30%;
+    max-width: 400px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    z-index: 1000;
+    display: none; /* Başlangıçta görünmez */
+    flex-direction: column;
+    gap: 16px;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Panel başlığı */
+  .panel-header {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 12px;
+  }
+  
+  /* İçerik bölgesi */
+  .panel-content {
+    font-size: 1em;
+    color: #333;
+    max-height: 200px;
+    overflow-y: auto;
+    padding-right: 5px;
+  }
+  
+  /* Özellik satırları */
+  .property-row {
+    display: flex;
+    gap: 8px;
+    padding: 4px 0;
+  }
+  
+  .property-key {
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .property-value {
+    color: #000;
+  }
+  
+  /* Mesajlar */
+  .panel-empty-message {
+    font-size: 0.9em;
+    color: #999;
+    font-style: italic;
+    text-align: center;
+  }
+  
+  /* Butonlar */
+  .panel-buttons-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+  
+  .panel-button {
+    padding: 8px 12px;
+    font-size: 1em;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .panel-button:hover {
+    opacity: 0.9;
+  }
+  
+  /* Buton çeşitleri */
+  .panel-button.success {
+    background-color: #28a745;
+    color: #fff;
+  }
+  
+  .panel-button.danger {
+    background-color: #dc3545;
+    color: #fff;
+  }
+  
+  .panel-button.warning {
+    background-color: #ffc107;
+    color: #212529;
+  }
+  
+  /* Kapatma butonu */
+  .panel-close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #999;
+  }
+  
+  .panel-close-button:hover {
+    color: #666;
+  }
+  
