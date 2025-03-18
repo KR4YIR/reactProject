@@ -5,17 +5,16 @@ import zoomToFeature from '../src/utils/zoomToFeature';
 import { getMap } from '../src/initMap';
 import { deleteFeature } from '../src/redux/objectSlice';
 import { toast } from 'react-toastify'; // Bildirimi içe aktarın
-import DetailsPanel from './DetailsPanel';
+import { openPanel, closePanel } from '../src/redux/panelSlice';
 import DuzenlePaneli from './duzenlePaneli';
 import { setFeature } from '../src/redux/featureSlice';
 //import { zoomToFeature } from '../src/zoomToFeature';
 const QueryPanel = ({ isOpen, onClose }) => {
     const dispatch = useDispatch();
-    const detailsPanel = new DetailsPanel();
     const { objects } = useSelector(state => state.object);
     const [animationClass, setAnimationClass] = useState('');
     const panelRef = useRef(null);
-    const [isDuzenlePaneliOpen, setIsDuzenlePaneliOpen] = useState(false);
+    
 
    
     
@@ -52,11 +51,10 @@ const QueryPanel = ({ isOpen, onClose }) => {
         const feature = objects.find(obj => obj.id === id);
         if (feature) {
             // Show panel with the feature data
-            //detailsPanel.show(feature, 'Selected Feature Details')
-            setIsDuzenlePaneliOpen(true)
-            console.log("dispatchoncesi " + feature)
-            console.log(feature)
+            
+            //setIsDuzenlePaneliOpen(true)
             dispatch(setFeature(feature))
+            dispatch(openPanel())
             //onClose();
 
         }
@@ -150,10 +148,11 @@ const QueryPanel = ({ isOpen, onClose }) => {
             </div>
             
         </div>
-        <DuzenlePaneli 
-            isOpen={isDuzenlePaneliOpen} 
-            onClose={() => setIsDuzenlePaneliOpen(false)} 
-           
+        <DuzenlePaneli
+        //     isOpen={isOpen} // Derived from Redux or parent state
+        //     onClose={() => {
+        //         dispatch(closePanel()); // Close panel safely via Redux
+        // }}
         />
     </>    
     );

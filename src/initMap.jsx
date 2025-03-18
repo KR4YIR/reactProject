@@ -7,16 +7,18 @@ import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import { fromLonLat } from 'ol/proj';
 import { Style, Stroke, Fill, Circle as CircleStyle } from 'ol/style';
-import Select from './SelectInteraction';
-
-
-
-
+import { useDispatch } from 'react-redux';
+import SelectInteraction from 'ol/interaction/Select';
+import DuzenlePaneli from '../public/duzenlePaneli';
+import { setFeature } from './redux/featureSlice';
+import { openPanel } from './redux/panelSlice';
 //export vectorSource
 export const vectorSource = new VectorSource(); // Make it a global export
 let mapInstance = null;
 export const getMap = () => mapInstance;
 const InitMap = () => {
+  const dispatch = useDispatch();
+
   const mapRef = useRef(null);
 
   useEffect(() => {
@@ -66,11 +68,28 @@ const InitMap = () => {
     });
     mapInstance = map;
     //select islemi
-    const selectInteraction = Select(map);
+
+    //const selectInteraction = Select(map,dispatch);
+    const select = new SelectInteraction();
+    map.addInteraction(select);
     
+    select.on('select', function(e) {
+        if (e.selected.length > 0) {
+          const selectedFeature = e.selected[0];
+          const pointData = selectedFeature.get('pointData');
+          if(pointData){
+            dispatch(setFeature(pointData));
+            dispatch(openPanel());
+          }
+          
+            
+        }
+    });
+
+
     return () => {
       map.setTarget(null);
-      map.removeInteraction(selectInteraction);
+      map.removeInteraction(select);
       mapInstance = null;
     }
   }, []);
@@ -78,7 +97,16 @@ const InitMap = () => {
 
   
   
-  return <div ref={mapRef} style={{ width: '100%', height: '100vh' }}></div>;
+  return (<>
+    <div ref={mapRef} style={{ width: '100%', height: '100vh' }}></div>
+    <DuzenlePaneli
+        //     isOpen={isOpen} // Derived from Redux or parent state
+        //     onClose={() => {
+        //         dispatch(closePanel()); // Close panel safely via Redux
+        // }}
+        />
+  </>)
+  
 };
 
 export default InitMap;

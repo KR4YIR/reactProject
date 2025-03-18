@@ -1,11 +1,10 @@
-// Select.js
+import DuzenlePaneli from '../public/duzenlePaneli';
 import SelectInteraction from 'ol/interaction/Select';
-import DetailsPanel from '../public/DetailsPanel';
-
-function Select(map) {
-  // Create details panel instance
-  const detailsPanel = new DetailsPanel();
+import { setFeature } from './redux/featureSlice';
+import { openPanel, closePanel } from './redux/panelSlice';
+function Select(map,dispatch) {
   
+    
   // Create OpenLayers select interaction
   const select = new SelectInteraction();
   map.addInteraction(select);
@@ -20,26 +19,27 @@ function Select(map) {
       
       if (pointData) {
         // Show panel with the feature data
-        detailsPanel.show(pointData, 'Selected Feature Details', {
-          feature: selectedFeature,
-          map: map
-        });
+        console.log(pointData)
+        dispatch(setFeature(pointData))
+        dispatch(openPanel());
       }
     } else {
       // Hide panel when no features are selected
-      detailsPanel.hide();
+      
     }
   });
   
   // Clear selection when panel is closed
-  const originalHideMethod = detailsPanel.hide;
-  detailsPanel.hide = function() {
-    originalHideMethod.call(this);
-    select.getFeatures().clear();
-    return this;
-  };
+    //select.getFeatures().clear();
+    
   
-  return select;
+  
+  return (
+    //select,
+    <>
+    <DuzenlePaneli/>
+    </>
+  );
 }
 
 export default Select;

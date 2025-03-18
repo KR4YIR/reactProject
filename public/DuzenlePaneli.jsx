@@ -1,27 +1,38 @@
 import Modal from "./Modal";
 import { useSelector, useDispatch } from "react-redux";
 import { clearFeature } from "../src/redux/featureSlice";
-import { deleteFeature,updateFeature } from "../src/redux/objectSlice";
-const DuzenlePaneli = ({ isOpen, onClose }) => {
+import { deleteFeature, updateFeature } from "../src/redux/objectSlice";
+import { closePanel } from "../src/redux/panelSlice";
+import { toast } from "react-toastify";
+const DuzenlePaneli = () => {
     const dispatch = useDispatch();
+    //feature bilgilerini store'dan al
     const selectedFeature = useSelector(state => state.feature.feature);
-    
+    //panelin acik veya kapali oldugunu store'dan al.
+    const isOpen = useSelector((state)=>state.panel.isOpen);
     const triggerEdit=()=>{
         console.log("edit triggered")
     };
     const triggerDelete=()=>{
         console.log("delete treiger")
         if(confirm("Silmek istiyor musun? ")){
+
             dispatch(deleteFeature(selectedFeature.id))
+            dispatch(clearFeature());
+            dispatch(closePanel());
+            toast.success("Feature deleted successfully!");
+        }
+        else{
+            toast.warning("delete operation is cancelled!");
         }
     };
     const handleClose = () => {
         dispatch(clearFeature());  // Seçili nesneyi sıfırla
-        onClose();  // Paneli kapat
+        dispatch(closePanel()); //paneli kapat
     };
     
     return (
-        <Modal isOpen={isOpen} onClose={onClose}>
+        <Modal isOpen={isOpen} onClose={()=>{dispatch(closePanel())}}>
             <h2>Editing Feature</h2>
     
             {selectedFeature && ( 
