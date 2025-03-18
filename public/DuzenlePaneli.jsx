@@ -6,6 +6,9 @@ import { closePanel } from "../src/redux/panelSlice";
 import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
 import { offEditPanel } from "../src/redux/panelSlice";
+import handleDragDropRequest from "../src/utils/enableDragMode";
+
+
 const DuzenlePaneli = () => {
     const dispatch = useDispatch();
     const selectedFeature = useSelector(state => state.feature.feature);
@@ -72,6 +75,12 @@ const DuzenlePaneli = () => {
         setEditedName('')
         setEditedWkt('')
     };
+    const handleDragDrop = () => {
+        console.log("welcome to Drag & Drop mode");
+        handleDragDropRequest(selectedFeature,dispatch);
+        dispatch(closePanel());
+
+    }
 
     return (
         <Modal isOpen={isOpen} onClose={handleClose}>
@@ -129,8 +138,9 @@ const DuzenlePaneli = () => {
                     </>
                 ) : (
                     <>
-                        <button onClick={triggerEdit} disabled={!selectedFeature} className="save-btn">Edit</button>
-                        <button onClick={triggerDelete} disabled={!selectedFeature} className="delete-btn">Delete</button>
+                        <button onClick={triggerEdit} className="save-btn">Edit</button>
+                        <button onClick={handleDragDrop} className="save-btn">Drag & Drop</button>
+                        <button onClick={triggerDelete} className="delete-btn">Delete</button>
                         <button onClick={handleClose} className="close-btn">Close</button>
                     </>
                 )}
