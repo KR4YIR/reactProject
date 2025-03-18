@@ -131,19 +131,20 @@
     
   }
   
-  table tr:hover {
+  .table-container tr:hover {
     background-color: hsl(207, 100%, 13%);
 
   }
   
-  table tr:nth-child(even) {
+  .table-container tr:nth-child(even) {
     background-color: hsl(207, 100%, 11%);
   }
-  table tr:nth-child(even):hover {
+  .table-container tr:nth-child(even):hover {
     background-color: hsl(207, 100%, 13%);
 
   }
-  
+  .save-btn,
+  .close-btn,
   .edit-btn, 
   .delete-btn {
     padding: 6px 10px;
@@ -153,19 +154,28 @@
     font-size: 12px;
     margin-right: 5px;
     text-align: right;
+    color: white;
+
    
   }
   
   .edit-btn {
     background-color: hsl(0, 0%, 28%);
-    color: white;
+  }
+  .save-btn{
+    background-color: hsl(40, 64%, 25%);
+  }
+  .save-btn:hover{
+    background-color: hsl(40, 67%, 52%);
   }
   
   .delete-btn {
     background-color: hsl(0, 38%, 25%);
-    color: white;
   }
-  
+  .close-btn:hover {
+    background-color: hsl(237, 46%, 26%);
+
+  }
   .edit-btn:hover {
     background-color: hsl(237, 86%, 64%);
   }

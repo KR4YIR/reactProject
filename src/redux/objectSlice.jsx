@@ -30,32 +30,6 @@ export const addFeature = createAsyncThunk(
     }
 );
 
-export const addLineString = createAsyncThunk(
-    'objects/addLineString',
-    async (lineStringData) => {
-        try {
-            const response = await axios.post(`${API_BASE_URL}/Point`, lineStringData);
-            return response.data.value;
-        } catch (error) {
-            console.error('Error adding linestring:', error);
-            throw error;
-        }
-    }
-);
-
-export const addPolygon = createAsyncThunk(
-    'objects/addPolygon',
-    async (polygonData) => {
-        try {
-            const response = await axios.post(`${API_BASE_URL}/Point`, polygonData);
-            return response.data.value;
-        } catch (error) {
-            console.error('Error adding polygon:', error);
-            throw error;
-        }
-    }
-);
-
 export const deleteFeature = createAsyncThunk(
     'objects/deleteFeature',
     async (id) => {

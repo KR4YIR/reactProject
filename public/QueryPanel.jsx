@@ -5,10 +5,9 @@ import zoomToFeature from '../src/utils/zoomToFeature';
 import { getMap } from '../src/initMap';
 import { deleteFeature } from '../src/redux/objectSlice';
 import { toast } from 'react-toastify'; // Bildirimi içe aktarın
-import { openPanel, closePanel } from '../src/redux/panelSlice';
-import DuzenlePaneli from './duzenlePaneli';
+import { openPanel } from '../src/redux/panelSlice';
 import { setFeature } from '../src/redux/featureSlice';
-//import { zoomToFeature } from '../src/zoomToFeature';
+
 const QueryPanel = ({ isOpen, onClose }) => {
     const dispatch = useDispatch();
     const { objects } = useSelector(state => state.object);
@@ -127,7 +126,7 @@ const QueryPanel = ({ isOpen, onClose }) => {
                                                 Show
                                             </button>
                                             <button
-                                                className="edit-btn"
+                                                className="save-btn"
                                                 onClick={() => handleEdit(item.id)}
                                             >
                                                 Edit
@@ -148,12 +147,6 @@ const QueryPanel = ({ isOpen, onClose }) => {
             </div>
             
         </div>
-        <DuzenlePaneli
-        //     isOpen={isOpen} // Derived from Redux or parent state
-        //     onClose={() => {
-        //         dispatch(closePanel()); // Close panel safely via Redux
-        // }}
-        />
     </>    
     );
 };

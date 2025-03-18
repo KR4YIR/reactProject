@@ -80,12 +80,14 @@ const InitMap = () => {
           if(pointData){
             dispatch(setFeature(pointData));
             dispatch(openPanel());
+            //secme animasyonunu temizledim objeyi yolladiktan sonra
+            select.getFeatures().clear();
           }
           
             
         }
     });
-
+    
 
     return () => {
       map.setTarget(null);
@@ -99,12 +101,7 @@ const InitMap = () => {
   
   return (<>
     <div ref={mapRef} style={{ width: '100%', height: '100vh' }}></div>
-    <DuzenlePaneli
-        //     isOpen={isOpen} // Derived from Redux or parent state
-        //     onClose={() => {
-        //         dispatch(closePanel()); // Close panel safely via Redux
-        // }}
-        />
+    <DuzenlePaneli/>
   </>)
   
 };

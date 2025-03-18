@@ -17,8 +17,18 @@
     padding: 20px;
     border-radius: 8px;
     max-width: 500px;
-    width: 100%;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    
+    
+    
+    
+    
+    background-color: hsla(207, 100%, 10%, 0.905);
+    
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    
+    
+    width: 80%;
+   
   }
   button{
     margin-right: 10px;
@@ -28,11 +38,66 @@
   }
   .edit-butonlari{
     text-align: right;
+    margin-top: 15px;
   }
   .elements{
     white-space: nowrap; /* Prevents the text from wrapping */
     overflow: hidden; /* Hides the overflowing text */
     text-overflow: ellipsis; /* Adds the ellipsis */
     max-width: 300px; /* Sets the maximum width for the cell */
-
   }
+  .table-container td{
+    padding: 18px 12px;
+    white-space: nowrap;/*  Prevents the text from wrapping */
+    overflow: hidden; /* Hides the overflowing text */
+    text-overflow: ellipsis; /* Adds the ellipsis */
+    max-width: 300px; /* Sets the maximum width for the cell */
+  }
+  .editTable tr:nth-child(even) {
+    background-color: hsl(208, 100%, 95%);
+  }
+  
+  .edit-butonlari button {
+    margin-left: 10px;
+    font-size: 20px;
+   
+  }
+  .edit-panel-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid #303030;
+  }
+  .table-container input {
+    height: 100%;
+    width: 95%; /* Input'u hücre içine güzelce yerleştirir */
+    padding: 8px 12px; /* İçeriğin rahat bir şekilde görünmesi için boşluk ekler */
+    border: 1px solid #ccc; /* İnce ve sade bir çerçeve */
+    border-radius: 4px; /* Köşeleri yuvarlatır */
+    font-size: 14px; /* Yazı boyutunu optimize eder */
+    /*color: #333;  Yazı rengini dengeler */
+    background-color: hwb(0 98% 2% / 0.071); /* Hafif bir arka plan rengi */
+    outline: none; /* Tıklanınca mavi sınırı kaldırır */
+    transition: all 0.3s ease; /* Hover ve focus geçişlerini yumuşatır */
+}
+
+/* Hover durumu */
+.table-container input:hover {
+  background-color: hwb(0 45% 55% / 0.458);
+    border-color: #007BFF; /* Çerçeve rengini vurgular */
+    color: #ebebeb;
+}
+
+/* Focus durumu */
+.table-container input:focus {
+    border-color: #007BFF; /* Vurgu rengi */
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); /* Hafif bir parıltı */
+}
+
+/* Disabled durum */
+.table-container input:disabled {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
