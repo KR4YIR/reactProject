@@ -7,7 +7,7 @@ import { deleteFeature } from '../src/redux/objectSlice';
 import { toast } from 'react-toastify'; // Bildirimi içe aktarın
 import { openPanel } from '../src/redux/panelSlice';
 import { setFeature } from '../src/redux/featureSlice';
-
+import { onEditPanel } from '../src/redux/panelSlice';
 const QueryPanel = ({ isOpen, onClose }) => {
     const dispatch = useDispatch();
     const { objects } = useSelector(state => state.object);
@@ -54,6 +54,9 @@ const QueryPanel = ({ isOpen, onClose }) => {
             //setIsDuzenlePaneliOpen(true)
             dispatch(setFeature(feature))
             dispatch(openPanel())
+            //seteditopen
+            console.log("calisiyor")
+            dispatch(onEditPanel());
             //onClose();
 
         }

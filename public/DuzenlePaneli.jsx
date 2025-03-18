@@ -5,13 +5,11 @@ import { deleteFeature, updateFeature } from "../src/redux/objectSlice";
 import { closePanel } from "../src/redux/panelSlice";
 import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
-
+import { offEditPanel } from "../src/redux/panelSlice";
 const DuzenlePaneli = () => {
     const dispatch = useDispatch();
     const selectedFeature = useSelector(state => state.feature.feature);
-    const isEdit = useSelector(state => state.feature.isEditOn)
-    console.log(isEdit)
-    
+    const isEdit = useSelector(state => state.panel.isEdit)
     const isOpen = useSelector((state) => state.panel.isOpen);
     const [isEditing, setIsEditing] = useState(false); // Edit modu için state
     const [editedName, setEditedName] = useState("");
@@ -24,7 +22,12 @@ const DuzenlePaneli = () => {
         if (selectedFeature) {
             setEditedName(selectedFeature.name || "");
             setEditedWkt(selectedFeature.wkt || "");
-            setIsEditing(isEdit);
+            if(isEdit){
+                setIsEditing(isEdit);
+                dispatch(offEditPanel());
+            }
+            
+
         }
     }, [selectedFeature]);
     
@@ -41,6 +44,7 @@ const DuzenlePaneli = () => {
         console.log(editedWkt)
         dispatch(updateFeature({ id: selectedFeature.id, data: data }));
         setIsEditing(false); // Edit modunu kapat
+        dispatch(offEditPanel());
         toast.success("Feature updated successfully!");
     };
 

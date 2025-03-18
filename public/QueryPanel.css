@@ -152,7 +152,7 @@
     border-radius: 4px;
     cursor: pointer;
     font-size: 12px;
-    margin-right: 5px;
+    margin-left: 5px;
     text-align: right;
     color: white;
 
@@ -173,7 +173,8 @@
     background-color: hsl(0, 38%, 25%);
   }
   .close-btn:hover {
-    background-color: hsl(237, 46%, 26%);
+    background-color: hsl(237, 86%, 64%);
+
 
   }
   .edit-btn:hover {

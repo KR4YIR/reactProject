@@ -7,7 +7,7 @@ const Modal = ({ isOpen, onClose, children }) => {
   return (
     <div className="modal-backdrop">
       <div className="modal-content">
-        <div className="query-panel-header">
+        <div className="query-panel-header" id="edit-panel-header">
         
                 <h2>Editing Feature</h2>
                 

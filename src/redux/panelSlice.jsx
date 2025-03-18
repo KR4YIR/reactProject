@@ -5,6 +5,7 @@ const panelSlice = createSlice({
   name: 'panel',
   initialState: {
     isOpen: false,
+    isEdit: false,
   },
   reducers: {
     openPanel: (state) => {
@@ -13,8 +14,14 @@ const panelSlice = createSlice({
     closePanel: (state) => {
       state.isOpen = false;
     },
+    onEditPanel: (state) => {
+      state.isEdit = true;
+    },
+    offEditPanel: (state) => {
+      state.isEdit = false;
+    },
   },
 });
 
-export const { openPanel, closePanel } = panelSlice.actions;
+export const { openPanel, closePanel, onEditPanel, offEditPanel } = panelSlice.actions;
 export default panelSlice.reducer;

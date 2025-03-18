@@ -17,22 +17,11 @@
     padding: 20px;
     border-radius: 8px;
     max-width: 500px;
-    
-    
-    
-    
-    
     background-color: hsla(207, 100%, 10%, 0.905);
-    
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    
-    
     width: 80%;
-   
   }
-  button{
-    margin-right: 10px;
-  }
+  
   .carpi-buton{
     text-align: right;
   }
@@ -94,10 +83,18 @@
     border-color: #007BFF; /* Vurgu rengi */
     box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); /* Hafif bir parıltı */
 }
+.close-btn{
+  background-color: hsl(237, 51%, 30%);
 
+}
 /* Disabled durum */
 .table-container input:disabled {
     background-color: #e9ecef;
     cursor: not-allowed;
     opacity: 0.6;
+}
+#edit-panel-header{
+  padding-top: 0px;
+  padding-right: 0px;
+  padding-left: 15px;
 }
