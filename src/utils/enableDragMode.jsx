@@ -40,20 +40,23 @@ const enableTranslateMode = (selectedFeatureJSON, dispatch) => {
 
         // Kullanıcı confirm işlemini reddederse eski konuma dön
         if (!confirm("Do you want to update?")) {
-            selectedFeature.setGeometry(initialGeometry); // Başlangıç geometrisini geri yükle
-            toast.warning("Update operation is cancelled!"); // Bilgilendirici mesaj göster
+            selectedFeature.setGeometry(initialGeometry);
+            
+            toast.warning("Update operation is cancelled!");
+            
         } else {
             const data = {
                 name: selectedFeatureJSON.name,
                 wkt: wkt
             };
             dispatch(updateFeature({
-                id: selectedFeatureJSON.id, // JSON'dan gelen ID
+                id: selectedFeatureJSON.id,
                 data: data
             }));
+            
             toast.success("Feature updated successfully!");
-        }
 
+        }
         map.removeInteraction(translate); // İşlem tamamlandığında etkileşimi kaldır
     });
     map.addInteraction(translate); // Translate işlemini haritaya ekle

@@ -33,6 +33,7 @@ const DuzenlePaneli = () => {
         setIsEditing(true); // Edit modunu aktif et
     };
     const triggerSave = () => {
+        if(confirm("Do you want to save changes? ")){
         const data = {
             name: editedName,
             wkt: editedWkt
@@ -42,11 +43,14 @@ const DuzenlePaneli = () => {
         setIsEditing(false); // Edit modunu kapat
         dispatch(offEditPanel());
         toast.success("Feature updated successfully!");
+    }else{triggerCancel()}
     };
     const triggerCancel = () => {
         setEditedName(selectedFeature.name); // Eski değerlere dön
         setEditedWkt(selectedFeature.wkt);
         setIsEditing(false); // Edit modunu kapat
+        toast.warning("Updating cancelled!");
+
     };
     const triggerDelete = () => {
         if (confirm("Do you want to delete feature???")) {
