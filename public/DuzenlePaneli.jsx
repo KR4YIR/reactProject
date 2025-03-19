@@ -6,7 +6,7 @@ import { closePanel } from "../src/redux/panelSlice";
 import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
 import { offEditPanel } from "../src/redux/panelSlice";
-import handleDragDropRequest from "../src/utils/enableDragMode";
+import enableTranslateMode from "../src/utils/enableDragMode";
 
 
 const DuzenlePaneli = () => {
@@ -18,8 +18,6 @@ const DuzenlePaneli = () => {
     const [editedName, setEditedName] = useState("");
     const [editedWkt, setEditedWkt] = useState("");
     
-
-    
     // selectedFeature değiştiğinde state'i güncelle
     useEffect(() => {
         if (selectedFeature) {
@@ -29,16 +27,11 @@ const DuzenlePaneli = () => {
                 setIsEditing(isEdit);
                 dispatch(offEditPanel());
             }
-            
-
         }
-    }, [selectedFeature]);
-    
-
+    }, [selectedFeature]); 
     const triggerEdit = () => {
         setIsEditing(true); // Edit modunu aktif et
     };
-
     const triggerSave = () => {
         const data = {
             name: editedName,
@@ -50,14 +43,11 @@ const DuzenlePaneli = () => {
         dispatch(offEditPanel());
         toast.success("Feature updated successfully!");
     };
-
     const triggerCancel = () => {
         setEditedName(selectedFeature.name); // Eski değerlere dön
         setEditedWkt(selectedFeature.wkt);
         setIsEditing(false); // Edit modunu kapat
-        
     };
-
     const triggerDelete = () => {
         if (confirm("Do you want to delete feature???")) {
             dispatch(deleteFeature(selectedFeature.id));
@@ -68,7 +58,6 @@ const DuzenlePaneli = () => {
             toast.warning("Delete operation is cancelled!");
         }
     };
-
     const handleClose = () => {
         dispatch(clearFeature());
         dispatch(closePanel());
@@ -76,12 +65,9 @@ const DuzenlePaneli = () => {
         setEditedWkt('')
     };
     const handleDragDrop = () => {
-        console.log("welcome to Drag & Drop mode");
-        handleDragDropRequest(selectedFeature,dispatch);
+        enableTranslateMode(selectedFeature,dispatch);
         dispatch(closePanel());
-
     }
-
     return (
         <Modal isOpen={isOpen} onClose={handleClose}>
             {selectedFeature && (
@@ -139,7 +125,7 @@ const DuzenlePaneli = () => {
                 ) : (
                     <>
                         <button onClick={triggerEdit} className="save-btn">Edit</button>
-                        <button onClick={handleDragDrop} className="save-btn">Drag & Drop</button>
+                        <button onClick={handleDragDrop} className="save-btn">Drag Mode</button>
                         <button onClick={triggerDelete} className="delete-btn">Delete</button>
                         <button onClick={handleClose} className="close-btn">Close</button>
                     </>

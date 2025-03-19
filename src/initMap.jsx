@@ -76,15 +76,19 @@ const InitMap = () => {
     select.on('select', function(e) {
         if (e.selected.length > 0) {
           const selectedFeature = e.selected[0];
+          
           const pointData = selectedFeature.get('pointData');
           if(pointData){
+            
             dispatch(setFeature(pointData));
+            if (!selectedFeature.getId()) {
+              selectedFeature.setId(pointData.id);
+            }
+            
             dispatch(openPanel());
             //secme animasyonunu temizledim objeyi yolladiktan sonra
             select.getFeatures().clear();
           }
-          
-            
         }
     });
     

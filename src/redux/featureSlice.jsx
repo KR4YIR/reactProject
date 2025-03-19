@@ -3,15 +3,17 @@ import { createSlice } from '@reduxjs/toolkit';
 const featureSlice = createSlice({
   name: 'feature',
   initialState: {
-    feature: null, // Başlangıçta seçili feature yok
+    feature: null, 
+    
   },
   reducers: {
-    setFeature(state, action) { // setfeatureSlice yerine daha anlaşılır bir isim
-      state.feature = action.payload; // Gelen veriyi feature değişkenine ata
+    setFeature(state, action) { 
+      state.feature = action.payload;
     },
-    clearFeature(state) { // clearfeatureSlice yerine daha doğru isim
-      state.feature = null; // Seçili nesneyi temizle
-    }
+    clearFeature(state) { 
+      state.feature = null;
+    },
+    
 
   },
 });
