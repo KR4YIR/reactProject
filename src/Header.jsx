@@ -4,6 +4,7 @@ import AddPointPanel from '../public/AddPointPanel';
 import QueryPanel from '../public/QueryPanel';
 import enableDrawMode from './utils/enableDrawMode';
 import { useDispatch } from 'react-redux';
+
 function Header() {
   const dispatch = useDispatch();
 
@@ -16,6 +17,7 @@ function Header() {
       <div className='Header'>
         <h1>Türkiye Haritası</h1>
         <div className='button'>
+        
         <button onClick={() => enableDrawMode('Point', dispatch, setIsAddPointPanelOpen)}>Add Point</button>
         <button onClick={() => enableDrawMode('LineString', dispatch, setIsAddPointPanelOpen)}>Add Linestring</button>
         <button onClick={() => enableDrawMode('Polygon', dispatch, setIsAddPointPanelOpen)}>Add Polygon</button>
@@ -36,8 +38,6 @@ function Header() {
         isOpen={isQueryPanelOpen} 
         onClose={() => setIsQueryPanelOpen(false)} 
       />
-
-      
     </header>
   );
 }

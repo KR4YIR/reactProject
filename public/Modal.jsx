@@ -1,6 +1,6 @@
 import "./Modal.css"; // Stil için ayrı bir dosya kullanabilirsiniz
 
-const Modal = ({ isOpen, onClose, children }) => {
+const Modal = ({ isOpen, onClose, title, children }) => {
   if (!isOpen) return null;
 
   return (
@@ -8,7 +8,7 @@ const Modal = ({ isOpen, onClose, children }) => {
       <div className="modal-content">
         <div className="query-panel-header" id="edit-panel-header">
         
-                <h2>Editing Feature</h2>
+                <h2>{title}</h2>
                 
            
           <button className="query-panel-close-btn" onClick={onClose}>

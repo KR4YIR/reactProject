@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Header from "./Header";
 import InitMap from "./initMap";
 import displayObj from "./displayObj";
@@ -6,8 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllObjects } from "./redux/objectSlice";
 import {ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import ConfirmPanel from "../public/ConfirmPanel";
 function App() {
+  const [isConfirmPanelOpen, setIsConfirmPanelOpen] = useState(false);
   const dispatch = useDispatch();
   const { objects } = useSelector(state => state.object);
   // Fetch objects on component mount
@@ -25,9 +26,13 @@ function App() {
   return(
     <>
       <ToastContainer position="top-right" autoClose={3000} />
+      <button onClick={() => setIsConfirmPanelOpen(true)}>confirmpanel</button>
       <Header />
       <InitMap />
-      
+      <ConfirmPanel
+        isOpen={isConfirmPanelOpen} 
+        onClose={() => setIsConfirmPanelOpen(false)} 
+      /> 
     </>
   );
 }

@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
 import { offEditPanel } from "../src/redux/panelSlice";
 import enableTranslateMode from "../src/utils/enableDragMode";
-
+import ConfirmPanel from "./ConfirmPanel";
 
 const DuzenlePaneli = () => {
     const dispatch = useDispatch();
@@ -17,7 +17,23 @@ const DuzenlePaneli = () => {
     const [isEditing, setIsEditing] = useState(false); // Edit modu için state
     const [editedName, setEditedName] = useState("");
     const [editedWkt, setEditedWkt] = useState("");
-    
+    const [confirmResolve, setConfirmResolve] = useState(null); // Promise'i çözmek için
+    const [isConfirmPanelOpen, setIsConfirmPanelOpen] = useState(false)
+
+    const showConfirm = () => {
+        return new Promise((resolve) => {
+            setConfirmResolve(() => resolve);
+            setIsConfirmPanelOpen(true);
+        });
+    };
+    const handleConfirmResult = (result) => {
+        if (confirmResolve) {
+            confirmResolve(result); // Promise'i çöz
+            setConfirmResolve(null); // Temizle
+        }
+        setIsConfirmPanelOpen(false);
+    };
+
     // selectedFeature değiştiğinde state'i güncelle
     useEffect(() => {
         if (selectedFeature) {
@@ -32,18 +48,19 @@ const DuzenlePaneli = () => {
     const triggerEdit = () => {
         setIsEditing(true); // Edit modunu aktif et
     };
-    const triggerSave = () => {
-        if(confirm("Do you want to save changes? ")){
+    const  triggerSave = async() => {
+        const userConfirmed = await showConfirm();
+        
+        if(userConfirmed){
         const data = {
             name: editedName,
             wkt: editedWkt
         }
-        console.log(editedWkt)
         dispatch(updateFeature({ id: selectedFeature.id, data: data }));
         setIsEditing(false); // Edit modunu kapat
         dispatch(offEditPanel());
         toast.success("Feature updated successfully!");
-    }else{triggerCancel()}
+    }else{console.log("user chosse to not save the changes")}
     };
     const triggerCancel = () => {
         setEditedName(selectedFeature.name); // Eski değerlere dön
@@ -52,8 +69,9 @@ const DuzenlePaneli = () => {
         toast.warning("Updating cancelled!");
 
     };
-    const triggerDelete = () => {
-        if (confirm("Do you want to delete feature???")) {
+    const triggerDelete = async () => {
+        const userConfirmed = await showConfirm();
+        if (userConfirmed) {
             dispatch(deleteFeature(selectedFeature.id));
             dispatch(clearFeature());
             dispatch(closePanel());
@@ -69,74 +87,82 @@ const DuzenlePaneli = () => {
         setEditedWkt('')
     };
     const handleDragDrop = () => {
-        enableTranslateMode(selectedFeature,dispatch);
+        enableTranslateMode(selectedFeature,dispatch,showConfirm);
         dispatch(closePanel());
     }
     return (
-        <Modal isOpen={isOpen} onClose={handleClose}>
-            {selectedFeature && (
-                <>
-                    <div>
-                        <table className="table-container">
-                            <tbody>
-                                <tr>
-                                    <td><strong>ID:</strong> </td>
-                                    <td>{selectedFeature.id}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Name:</strong> </td>
-                                    <td style={{padding:"0px 12px"}}>
-                                        {isEditing ? (
-                                            <input 
-                                                type="text"
-                                                value={editedName}
-                                                onChange={(e) => setEditedName(e.target.value)}
-                                            />
-                                        ) : (
-                                            editedName
-                                        )}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><strong>wkt:</strong> </td>
-                                    <td style={{padding:"0px 12px"}}>
-                                        {isEditing ? (
-                                            <input
-                                                type="text"
-                                                value={editedWkt}
-                                                onChange={(e) => setEditedWkt(e.target.value)}
-                                            />
-                                        ) : (
-                                            editedWkt
-                                        )}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Created Date:</strong> </td>
-                                    <td>{selectedFeature.createdDate}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </>
-            )}
-            <div className="edit-butonlari">
-                {isEditing ? (
+        <>
+            <Modal isOpen={isOpen} onClose={handleClose} title="Editing Feature">
+                {selectedFeature && (
                     <>
-                        <button onClick={triggerSave} className="save-btn">Save</button>
-                        <button onClick={triggerCancel} className="delete-btn">Cancel</button>
-                    </>
-                ) : (
-                    <>
-                        <button onClick={triggerEdit} className="save-btn">Edit</button>
-                        <button onClick={handleDragDrop} className="save-btn">Drag Mode</button>
-                        <button onClick={triggerDelete} className="delete-btn">Delete</button>
-                        <button onClick={handleClose} className="close-btn">Close</button>
+                        <div>
+                            <table className="table-container">
+                                <tbody>
+                                    <tr>
+                                        <td><strong>ID:</strong> </td>
+                                        <td>{selectedFeature.id}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Name:</strong> </td>
+                                        <td style={{padding:"0px 12px"}}>
+                                            {isEditing ? (
+                                                <input 
+                                                    type="text"
+                                                    value={editedName}
+                                                    onChange={(e) => setEditedName(e.target.value)}
+                                                />
+                                            ) : (
+                                                editedName
+                                            )}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>wkt:</strong> </td>
+                                        <td style={{padding:"0px 12px"}}>
+                                            {isEditing ? (
+                                                <input
+                                                    type="text"
+                                                    value={editedWkt}
+                                                    onChange={(e) => setEditedWkt(e.target.value)}
+                                                />
+                                            ) : (
+                                                editedWkt
+                                            )}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Created Date:</strong> </td>
+                                        <td>{selectedFeature.createdDate}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </>
                 )}
-            </div>
-        </Modal>
+                <div className="edit-butonlari">
+                    {isEditing ? (
+                        <>
+                            <button onClick={triggerSave} className="save-btn">Save</button>
+                            <button onClick={triggerCancel} className="delete-btn">Cancel</button>
+                        </>
+                    ) : (
+                        <>
+                            <button onClick={triggerEdit} className="save-btn">Edit</button>
+                            <button onClick={handleDragDrop} className="save-btn">Drag Mode</button>
+                            <button onClick={triggerDelete} className="delete-btn">Delete</button>
+                            <button onClick={handleClose} className="close-btn">Close</button>
+                        </>
+                    )}
+                </div>
+            </Modal>
+            <ConfirmPanel
+                isOpen={isConfirmPanelOpen}
+                onClose={() => setIsConfirmPanelOpen(false)}
+                onConfirm={(value) => handleConfirmResult(value)}                
+            />
+        </>
     );
+
 };
 
 export default DuzenlePaneli;

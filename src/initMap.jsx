@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { defaults as defaultControls, Attribution } from 'ol/control';
 import 'ol/ol.css';
 import { Map, View } from 'ol';
 import TileLayer from 'ol/layer/Tile';
@@ -54,6 +55,8 @@ const InitMap = () => {
     });
 
     const map = new Map({
+      controls: defaultControls({ attribution: false,zoom: false }),
+      
       target: mapRef.current,
       layers: [
         new TileLayer({

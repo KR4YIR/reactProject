@@ -6,9 +6,9 @@ import { Collection } from "ol";
 import WKT from "ol/format/WKT";
 import { toast } from "react-toastify";
 
-const enableTranslateMode = (selectedFeatureJSON, dispatch) => {
+const enableTranslateMode = (selectedFeatureJSON, dispatch, getUserConfirmation) => {
     const map = getMap();
-
+    
     // Mevcut feature'ı vectorSource'tan bul
     const selectedFeature = vectorSource.getFeatures().find(feature => {
         return feature.getId() === selectedFeatureJSON.id;
@@ -27,7 +27,7 @@ const enableTranslateMode = (selectedFeatureJSON, dispatch) => {
         features: new Collection([selectedFeature]) // Mevcut özelliği hedefliyoruz
     });
 
-    translate.on('translateend', (event) => {
+    translate.on('translateend', async (event) => {
         const feature = event.features.item(0); // Taşınan özellik
         const geometry = feature.getGeometry();
 
@@ -39,7 +39,8 @@ const enableTranslateMode = (selectedFeatureJSON, dispatch) => {
         const wkt = wktFormat.writeGeometry(transformedGeometry);
 
         // Kullanıcı confirm işlemini reddederse eski konuma dön
-        if (!confirm("Do you want to update?")) {
+        const userConfirmed = await getUserConfirmation();
+        if (!userConfirmed) {
             selectedFeature.setGeometry(initialGeometry);
             
             toast.warning("Update operation is cancelled!");
