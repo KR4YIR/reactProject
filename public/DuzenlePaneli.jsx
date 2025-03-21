@@ -6,8 +6,9 @@ import { closePanel } from "../src/redux/panelSlice";
 import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
 import { offEditPanel } from "../src/redux/panelSlice";
-import enableTranslateMode from "../src/utils/enableDragMode";
 import ConfirmPanel from "./ConfirmPanel";
+import { onEdit } from "../src/redux/editSlice";
+import { enableTranslateMode } from "../src/utils/enableDragMode";
 
 const DuzenlePaneli = () => {
     const dispatch = useDispatch();
@@ -16,10 +17,9 @@ const DuzenlePaneli = () => {
     const isOpen = useSelector((state) => state.panel.isOpen);
     const [isEditing, setIsEditing] = useState(false); // Edit modu için state
     const [editedName, setEditedName] = useState("");
-    const [editedWkt, setEditedWkt] = useState("");
     const [confirmResolve, setConfirmResolve] = useState(null); // Promise'i çözmek için
     const [isConfirmPanelOpen, setIsConfirmPanelOpen] = useState(false)
-
+    
     const showConfirm = () => {
         return new Promise((resolve) => {
             setConfirmResolve(() => resolve);
@@ -34,11 +34,16 @@ const DuzenlePaneli = () => {
         setIsConfirmPanelOpen(false);
     };
 
+    //onEdit
+    const onEditFunction = () =>{
+        dispatch(onEdit());
+    }
+    //offEdit
+    
     // selectedFeature değiştiğinde state'i güncelle
     useEffect(() => {
         if (selectedFeature) {
             setEditedName(selectedFeature.name || "");
-            setEditedWkt(selectedFeature.wkt || "");
             if(isEdit){
                 setIsEditing(isEdit);
                 dispatch(offEditPanel());
@@ -54,17 +59,17 @@ const DuzenlePaneli = () => {
         if(userConfirmed){
         const data = {
             name: editedName,
-            wkt: editedWkt
+            wkt: selectedFeature.wkt
         }
         dispatch(updateFeature({ id: selectedFeature.id, data: data }));
         setIsEditing(false); // Edit modunu kapat
         dispatch(offEditPanel());
         toast.success("Feature updated successfully!");
+        setEditedName(data.name);
     }else{console.log("user chosse to not save the changes")}
     };
     const triggerCancel = () => {
         setEditedName(selectedFeature.name); // Eski değerlere dön
-        setEditedWkt(selectedFeature.wkt);
         setIsEditing(false); // Edit modunu kapat
         toast.warning("Updating cancelled!");
 
@@ -84,11 +89,15 @@ const DuzenlePaneli = () => {
         dispatch(clearFeature());
         dispatch(closePanel());
         setEditedName('')
-        setEditedWkt('')
     };
     const handleDragDrop = () => {
         enableTranslateMode(selectedFeature,dispatch,showConfirm);
         dispatch(closePanel());
+    }
+    const handleModify = () => {
+        
+        dispatch(closePanel());
+        onEditFunction();
     }
     return (
         <>
@@ -118,17 +127,7 @@ const DuzenlePaneli = () => {
                                     </tr>
                                     <tr>
                                         <td><strong>wkt:</strong> </td>
-                                        <td style={{padding:"0px 12px"}}>
-                                            {isEditing ? (
-                                                <input
-                                                    type="text"
-                                                    value={editedWkt}
-                                                    onChange={(e) => setEditedWkt(e.target.value)}
-                                                />
-                                            ) : (
-                                                editedWkt
-                                            )}
-                                        </td>
+                                        <td>{selectedFeature.wkt}</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Created Date:</strong> </td>
@@ -148,7 +147,8 @@ const DuzenlePaneli = () => {
                     ) : (
                         <>
                             <button onClick={triggerEdit} className="save-btn">Edit</button>
-                            <button onClick={handleDragDrop} className="save-btn">Drag Mode</button>
+                            <button onClick={handleDragDrop} className="drag-btn">Drag Mode</button>
+                            <button onClick={handleModify} className="modify-btn">Modify Mode</button>
                             <button onClick={triggerDelete} className="delete-btn">Delete</button>
                             <button onClick={handleClose} className="close-btn">Close</button>
                         </>

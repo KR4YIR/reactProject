@@ -1,4 +1,4 @@
-import { Translate } from "ol/interaction";
+import { Translate, Modify } from "ol/interaction";
 import { getMap } from "../initMap";
 import { updateFeature } from "../redux/objectSlice";
 import { vectorSource } from "../initMap";
@@ -6,9 +6,8 @@ import { Collection } from "ol";
 import WKT from "ol/format/WKT";
 import { toast } from "react-toastify";
 
-const enableTranslateMode = (selectedFeatureJSON, dispatch, getUserConfirmation) => {
+export const enableTranslateMode = (selectedFeatureJSON, dispatch, getUserConfirmation) => {
     const map = getMap();
-    
     // Mevcut feature'ı vectorSource'tan bul
     const selectedFeature = vectorSource.getFeatures().find(feature => {
         return feature.getId() === selectedFeatureJSON.id;
@@ -33,7 +32,7 @@ const enableTranslateMode = (selectedFeatureJSON, dispatch, getUserConfirmation)
 
         // Koordinatları dönüştür
         const transformedGeometry = geometry.clone().transform('EPSG:3857', 'EPSG:4326');
-        
+
         // WKT formatına dönüştür
         const wktFormat = new WKT();
         const wkt = wktFormat.writeGeometry(transformedGeometry);
@@ -63,4 +62,4 @@ const enableTranslateMode = (selectedFeatureJSON, dispatch, getUserConfirmation)
     map.addInteraction(translate); // Translate işlemini haritaya ekle
 };
 
-export default enableTranslateMode;
+

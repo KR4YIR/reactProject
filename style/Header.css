@@ -23,3 +23,12 @@ h1:hover{
 .Header .button button{
 margin-left: 7px;
 }
+.header-edit-btn{
+    background-color: rgb(168, 0, 0);
+}
+.header-edit-btn:hover{
+    background-color: rgb(255, 0, 0);
+}
+.header-edit-btn{
+    border: none;
+}

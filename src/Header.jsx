@@ -1,27 +1,31 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../style/Header.css';
 import AddPointPanel from '../public/AddPointPanel';
 import QueryPanel from '../public/QueryPanel';
 import enableDrawMode from './utils/enableDrawMode';
 import { useDispatch } from 'react-redux';
-
+import { useSelector } from 'react-redux';
 function Header() {
   const dispatch = useDispatch();
-
   const [isQueryPanelOpen, setIsQueryPanelOpen] = useState(false);
   const [isAddPointPanelOpen, setIsAddPointPanelOpen] = useState(false);
- 
-  
+  const visibility = useSelector(state => state.Edit.edit)
   return (
+    !visibility && (
     <header>
       <div className='Header'>
         <h1>Türkiye Haritası</h1>
         <div className='button'>
         
+          
+        
+        <>
         <button onClick={() => enableDrawMode('Point', dispatch, setIsAddPointPanelOpen)}>Add Point</button>
         <button onClick={() => enableDrawMode('LineString', dispatch, setIsAddPointPanelOpen)}>Add Linestring</button>
         <button onClick={() => enableDrawMode('Polygon', dispatch, setIsAddPointPanelOpen)}>Add Polygon</button>
         <button onClick={() => setIsQueryPanelOpen(true)}>Query Panel</button>
+        </>
+        
         </div>
       </div>
 
@@ -39,7 +43,7 @@ function Header() {
         onClose={() => setIsQueryPanelOpen(false)} 
       />
     </header>
-  );
+  ));
 }
 
 export default Header;

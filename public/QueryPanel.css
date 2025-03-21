@@ -143,6 +143,8 @@
     background-color: hsl(207, 100%, 13%);
 
   }
+  .drag-btn,
+  .modify-btn,
   .save-btn,
   .close-btn,
   .edit-btn, 
@@ -162,28 +164,39 @@
   .edit-btn {
     background-color: hsl(0, 0%, 28%);
   }
+  .edit-btn:hover {
+    background-color: hsl(237, 86%, 64%);
+  }
   .save-btn{
     background-color: hsl(40, 64%, 25%);
   }
   .save-btn:hover{
     background-color: hsl(40, 67%, 52%);
   }
-  
+  .modify-btn{
+    background-color: rgb(77, 105, 23);
+  }
+  .modify-btn:hover{
+    background-color: rgb(104, 139, 32);
+  } 
+  .drag-btn{
+    background-color: rgb(40, 88, 76);
+  }
+  .drag-btn:hover{
+    background-color: rgb(70, 151, 130);
+
+  }
   .delete-btn {
     background-color: hsl(0, 38%, 25%);
   }
-  .close-btn:hover {
-    background-color: hsl(237, 86%, 64%);
-
-
-  }
-  .edit-btn:hover {
-    background-color: hsl(237, 86%, 64%);
-  }
-  
   .delete-btn:hover {
     background-color: #d33426;
   }
+  .close-btn:hover {
+    background-color: hsl(237, 86%, 64%);
+  }
+   
+
   
   .pagination {
     display: flex;

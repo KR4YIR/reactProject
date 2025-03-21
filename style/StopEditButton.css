@@ -1,0 +1,23 @@
+.stop-editing-container {
+    position: absolute; /* This will overlay the button */
+    top: 20px;          /* Adjust the position as needed */
+    right: 20px;         /* Adjust the position as needed */
+    z-index: 9999;      /* Make sure the button stays on top of the map */
+    margin-top: 0;      /* Remove the unnecessary margin */
+  }
+  
+  .stop-editing {
+    font-size: 50px;
+    padding: 10px 20px;  /* Make the button a bit larger */
+    background-color: #f44336; /* Change to the color you want */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  }
+  
+  .stop-editing:hover {
+    background-color: #d32f2f; /* Hover effect */
+  }
+  
