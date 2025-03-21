@@ -17,13 +17,33 @@ import { Modify } from 'ol/interaction';
 import WKT from 'ol/format/WKT';
 import { toast } from 'react-toastify';
 import { updateFeature } from './redux/objectSlice';
+import { useState } from 'react';
+import ConfirmPanel from '../public/ConfirmPanel';
 //export vectorSource
 export const vectorSource = new VectorSource(); // Make it a global export
 let mapInstance = null;
 export const getMap = () => mapInstance;
 const InitMap = () => {
-  const dispatch = useDispatch();
+  //confirm paneli ekliyorum
+  const [isConfirmPanelOpen, setIsConfirmPanelOpen] = useState(false)
+  const [confirmResolve, setConfirmResolve] = useState(null); // Promise'i çözmek için
 
+  const showConfirm = () => {
+    return new Promise((resolve) => {
+        setConfirmResolve(() => resolve);
+        setIsConfirmPanelOpen(true);
+    });
+  };
+  const handleConfirmResult = (result) => {
+    if (confirmResolve) {
+        confirmResolve(result); // Promise'i çöz
+        setConfirmResolve(null); // Temizle
+    }
+    setIsConfirmPanelOpen(false);
+  };
+
+
+  const dispatch = useDispatch();
   const mapRef = useRef(null);
 
   useEffect(() => {
@@ -112,82 +132,88 @@ const InitMap = () => {
   const wktRef = useRef(null);
   useEffect(() => {
     const map = getMap();
-    
     console.log("initmapUseeffect",isModify);
-    if(isModify){ 
-      console.log("enabled modify mode")
-      if(map){
-        const selectedFeature = vectorSource.getFeatures().find((feature) => {
-          return feature.getId() === selectedFeatureJSON.id;
-      });
-      selectedRef.current = selectedFeature; 
-  
-      if (!selectedFeature) {
-          console.error("Selected feature not found in vectorSource.");
-          return;
-      }
-  
-      // Save the initial geometry for reverting changes
-      const initialGeometry = selectedFeature.getGeometry().clone();
-      revertRef.current = initialGeometry;
-      // Create a Modify interaction for the selected feature
-      const modify = new Modify({
-          source: vectorSource, // Source containing the feature
-          features: new Collection([selectedFeature]), // Restrict modification to this feature
-      });
-      modifyRef.current = modify;
-      modify.on("modifyend", async (event) => {
-          if (event.features && event.features.getLength() > 0) {
-              const feature = event.features.item(0); // Modified feature
-              const geometry = feature.getGeometry();
-  
-              // Convert the geometry to WKT format
-              const transformedGeometry = geometry.clone().transform("EPSG:3857", "EPSG:4326");
-              const wktFormat = new WKT();
-              const wkt = wktFormat.writeGeometry(transformedGeometry);
-              wktRef.current = wkt;
-              console.log(wkt);
-
-              // Call the offEditFunction to handle cleanup
-              
-          } else {
-              console.error("No features found in modifyend event.");
-          }
-      });
-  
-      map.addInteraction(modify); // Add the Modify interaction to the map
-      }else{console.log("map is empty")}
-      
-    }else{
-      console.log("removedInteraction");
-      if (map && modifyRef.current) {
-        map.removeInteraction(modifyRef.current);
-        modifyRef.current = null;
-        if(confirm("do you want to update ?")){
-          console.log("you accept it")
-          // Update the feature in Redux store if user confirms
-          const data = {
-              name: selectedFeatureJSON.name,
-              wkt: wktRef.current,
-          };
-          wktRef.current = null;
-          dispatch(updateFeature({
-              id: selectedFeatureJSON.id,
-              data: data,
-          }));
-          toast.success("Feature updated successfully!");
-        }else{
-          console.log("you reject it")
-          selectedRef.current.setGeometry(revertRef.current);
-          revertRef.current = null;
-          selectedRef.current = null;
-          toast.warning("Update operation is cancelled!");
+    const handleModifyMode = async () => {
+      if(isModify){ 
+        console.log("enabled modify mode")
+        if(map){
+          const selectedFeature = vectorSource.getFeatures().find((feature) => {
+            return feature.getId() === selectedFeatureJSON.id;
+        });
+        selectedRef.current = selectedFeature; 
+    
+        if (!selectedFeature) {
+            console.error("Selected feature not found in vectorSource.");
+            return;
         }
+    
+        // Save the initial geometry for reverting changes
+        const initialGeometry = selectedFeature.getGeometry().clone();
+        revertRef.current = initialGeometry;
+        // Create a Modify interaction for the selected feature
+        const modify = new Modify({
+            source: vectorSource, // Source containing the feature
+            features: new Collection([selectedFeature]), // Restrict modification to this feature
+        });
+        modifyRef.current = modify;
+        modify.on("modifyend", (event) => {
+            if (event.features && event.features.getLength() > 0) {
+                const feature = event.features.item(0); // Modified feature
+                const geometry = feature.getGeometry();
+    
+                // Convert the geometry to WKT format
+                const transformedGeometry = geometry.clone().transform("EPSG:3857", "EPSG:4326");
+                const wktFormat = new WKT();
+                const wkt = wktFormat.writeGeometry(transformedGeometry);
+                wktRef.current = wkt;
+                
 
-      }else{console.log("failed removing")}
+                // Call the offEditFunction to handle cleanup
+                
+            } else {
+                console.error("No features found in modifyend event.");
+            }
+        });
+    
+        map.addInteraction(modify); // Add the Modify interaction to the map
+        }else{console.log("map is empty")}
+        
+      }else{
+        console.log("removedInteraction");
+        if (map && modifyRef.current) {
+          map.removeInteraction(modifyRef.current);
+          modifyRef.current = null;
+          if(wktRef.current != null){
+            const userConfirmed = await showConfirm();
+            if(userConfirmed){
+              console.log("you accept it")
+              // Update the feature in Redux store if user confirms
+              const data = {
+                  name: selectedFeatureJSON.name,
+                  wkt: wktRef.current,
+              };
+              console.log("Data being sent to the API:", data);
+              wktRef.current = null;
+              dispatch(updateFeature({
+                  id: selectedFeatureJSON.id,
+                  data: data,
+              }));
+              toast.success("Feature updated successfully!");
+            }else{
+              console.log("you reject it")
+              selectedRef.current.setGeometry(revertRef.current);
+              revertRef.current = null;
+              selectedRef.current = null;
+              toast.warning("Update operation is cancelled!");
+            }
+          }else{toast.warning("Nothing Changed!")}
 
-      
+        }else{console.log("failed removing")}
+
+        
+      }
     }
+    handleModifyMode();
   }, [isModify]);
   
   
@@ -195,7 +221,11 @@ const InitMap = () => {
   return (<>
     <div ref={mapRef} style={{ width: '100%', height: '100vh' }}></div>
     <DuzenlePaneli/>
-    
+    <ConfirmPanel
+        isOpen={isConfirmPanelOpen}
+        onClose={() => setIsConfirmPanelOpen(false)}
+        onConfirm={(value) => handleConfirmResult(value)}                
+    />
   </>)
   
 };
