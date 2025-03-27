@@ -24,6 +24,7 @@ function Header() {
         <button onClick={() => enableDrawMode('LineString', dispatch, setIsAddPointPanelOpen)}>Add Linestring</button>
         <button onClick={() => enableDrawMode('Polygon', dispatch, setIsAddPointPanelOpen)}>Add Polygon</button>
         <button onClick={() => setIsQueryPanelOpen(true)}>Query Panel</button>
+        
         </>
         
         </div>

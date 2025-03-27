@@ -8,7 +8,6 @@ import {ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ConfirmPanel from "../public/ConfirmPanel";
 import { StopEditButton } from "./StopEditButton";
-
 function App() {
   const [isConfirmPanelOpen, setIsConfirmPanelOpen] = useState(false);
   const dispatch = useDispatch();

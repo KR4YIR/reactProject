@@ -132,10 +132,10 @@ const InitMap = () => {
   const wktRef = useRef(null);
   useEffect(() => {
     const map = getMap();
-    console.log("initmapUseeffect",isModify);
+    
     const handleModifyMode = async () => {
       if(isModify){ 
-        console.log("enabled modify mode")
+        
         if(map){
           const selectedFeature = vectorSource.getFeatures().find((feature) => {
             return feature.getId() === selectedFeatureJSON.id;
@@ -179,20 +179,20 @@ const InitMap = () => {
         }else{console.log("map is empty")}
         
       }else{
-        console.log("removedInteraction");
+        
         if (map && modifyRef.current) {
           map.removeInteraction(modifyRef.current);
           modifyRef.current = null;
           if(wktRef.current != null){
             const userConfirmed = await showConfirm();
             if(userConfirmed){
-              console.log("you accept it")
+              
               // Update the feature in Redux store if user confirms
               const data = {
                   name: selectedFeatureJSON.name,
                   wkt: wktRef.current,
               };
-              console.log("Data being sent to the API:", data);
+              
               wktRef.current = null;
               dispatch(updateFeature({
                   id: selectedFeatureJSON.id,
@@ -200,7 +200,7 @@ const InitMap = () => {
               }));
               toast.success("Feature updated successfully!");
             }else{
-              console.log("you reject it")
+              
               selectedRef.current.setGeometry(revertRef.current);
               revertRef.current = null;
               selectedRef.current = null;
@@ -208,7 +208,9 @@ const InitMap = () => {
             }
           }else{toast.warning("Nothing Changed!")}
 
-        }else{console.log("failed removing")}
+        }else{console.log("failed removing")
+          
+        }
 
         
       }

@@ -99,6 +99,27 @@ const DuzenlePaneli = () => {
         dispatch(closePanel());
         onEditFunction();
     }
+    function formatRelativeTime(createdDate) {
+        const now = new Date();
+        const created = new Date(createdDate);
+        const differenceInMilliseconds = now - created;
+    
+        const seconds = Math.floor(differenceInMilliseconds / 1000);
+        const minutes = Math.floor(seconds / 60);
+        const hours = Math.floor(minutes / 60);
+        const days = Math.floor(hours / 24);
+    
+        if (days > 0) {
+            return `${days} days ${hours % 24} hours`;
+        } else if (hours > 0) {
+            return `${hours} hours ${minutes % 60} minutes`;
+        } else if (minutes > 0) {
+            return `${minutes} minutes`;
+        } else {
+            return `${seconds} second`;
+        }
+    }
+    
     return (
         <>
             <Modal isOpen={isOpen} onClose={handleClose} title="Editing Feature">
@@ -130,8 +151,8 @@ const DuzenlePaneli = () => {
                                         <td>{selectedFeature.wkt}</td>
                                     </tr>
                                     <tr>
-                                        <td><strong>Created Date:</strong> </td>
-                                        <td>{selectedFeature.createdDate}</td>
+                                        <td><strong>Last Update:</strong> </td>
+                                        <td>{formatRelativeTime(selectedFeature.createdDate)}</td>
                                     </tr>
                                 </tbody>
                             </table>
