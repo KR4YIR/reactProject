@@ -1,0 +1,46 @@
+.background2 {
+    background-image: url(../assets/bg2.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+}
+.profile-container{
+    background-color: rgba(85, 72, 0, 0.963);
+    height: auto;
+    width: 60%;
+    text-align: center;
+    font-size: 25px;
+    border-radius: 30px;
+
+}
+.profile-container h1{
+    color: white;
+    margin-top: 10px;
+}
+
+.profile-table-container td{
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid rgb(32, 28, 0);
+    color: whitesmoke;
+}
+.profile-buttons button{
+    margin-top: 25px;
+    margin-bottom: 25px;
+    margin-right: 25px;
+    background-color: rgb(28, 27, 0);
+}
+.profile-buttons button:hover{
+   
+    border-color: rgb(255, 170, 127);
+}
+.profile-buttons{
+    text-align: right;
+}

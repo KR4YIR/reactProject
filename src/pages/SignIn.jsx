@@ -38,7 +38,7 @@ const SignIn = () => {
                     <label>Password</label>
                     <input value={password} onChange={e => setPassword(e.target.value)} type="password" placeholder="Password" />
                     <button onClick={handleLogin}>Giriş Yap</button>
-                    <p>
+                    <p>Do no have an account?
                      <a onClick={handleSignUp}>SignUp</a>
                     </p>
                 </div>

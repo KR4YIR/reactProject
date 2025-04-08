@@ -114,15 +114,15 @@
     border-collapse: collapse;
   }
   
-  table th,
-  table td {
+  .table-container th,
+  .table-container td {
     padding: 12px 15px;
     text-align: left;
     border-bottom: 1px solid rgb(0, 60, 110);
     color: whitesmoke;
   }
   
-  table th {
+  .table-container th {
     background-color: hsl(207, 100%, 10%);
     font-weight: 600;
     color: whitesmoke;

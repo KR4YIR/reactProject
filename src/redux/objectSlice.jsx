@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
 import API from '../axios';
 const API_BASE_URL = "https://localhost:7223/api";
 
@@ -85,10 +84,10 @@ export const objectSlice = createSlice({
             state.objects = state.objects.filter(obj => obj.id !== action.payload);
         })
         .addCase(updateFeature.fulfilled, (state, action) => {
-                const index = state.objects.findIndex(obj => obj.id === action.payload.id);
-                if (index !== -1) {
-                    state.objects[index] = action.payload;
-                }
+            const index = state.objects.findIndex(obj => obj.id === action.payload.id);
+            if (index !== -1) {
+                state.objects[index] = action.payload;
+            }
         })
     }
 })

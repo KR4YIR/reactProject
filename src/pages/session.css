@@ -1,4 +1,4 @@
-h1{
+.form-container h1{
     color: white;
     width: 60vh;
     margin-bottom: 20px;
@@ -32,7 +32,7 @@ p{
     display: flex;          /* Add this to make it a flex container */
     align-items: center;    /* Vertically center the child */
     justify-content: center; /* Horizontally center the child */
-
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .navigate{
     display: inline-block;
