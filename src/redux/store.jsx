@@ -4,12 +4,14 @@ import wktReducer from './wktSlice'
 import featureReducer from './featureSlice'
 import panelReducer from './panelSlice'
 import editReducer from './editSlice'
+import authReducer from './authSlice'
 export const store = configureStore({
   reducer: {
     object: objectReducer,
     wkt: wktReducer,
     feature: featureReducer,
     panel: panelReducer,
-    Edit: editReducer
+    Edit: editReducer,
+    auth: authReducer
   },
 })

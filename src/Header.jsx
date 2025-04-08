@@ -5,6 +5,7 @@ import QueryPanel from '../public/QueryPanel';
 import enableDrawMode from './utils/enableDrawMode';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { logout } from './redux/authSlice';
 function Header() {
   const dispatch = useDispatch();
   const [isQueryPanelOpen, setIsQueryPanelOpen] = useState(false);
@@ -24,6 +25,8 @@ function Header() {
         <button onClick={() => enableDrawMode('LineString', dispatch, setIsAddPointPanelOpen)}>Add Linestring</button>
         <button onClick={() => enableDrawMode('Polygon', dispatch, setIsAddPointPanelOpen)}>Add Polygon</button>
         <button onClick={() => setIsQueryPanelOpen(true)}>Query Panel</button>
+        <button onClick={() => dispatch(logout())}>LogOut</button>
+        
         
         </>
         

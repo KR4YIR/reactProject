@@ -208,9 +208,7 @@ const InitMap = () => {
             }
           }else{toast.warning("Nothing Changed!")}
 
-        }else{console.log("failed removing")
-          
-        }
+        }else{}
 
         
       }

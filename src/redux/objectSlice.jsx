@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import API from '../axios';
 const API_BASE_URL = "https://localhost:7223/api";
 
 
@@ -8,7 +9,8 @@ export const getAllObjects = createAsyncThunk(
     'objects/getAllObjects',
     async () => {
         try {
-            const response = await axios.get(`${API_BASE_URL}/Point`);
+            //const response = await axios.get(`${API_BASE_URL}/Point`);
+            const response = await API.get(`/Point`);
             return response.data.value || [];
         } catch (error) {
             console.error('Error fetching objects:', error);
@@ -21,7 +23,8 @@ export const addFeature = createAsyncThunk(
     'objects/addFeature',
     async (pointData) => {
         try {
-            const response = await axios.post(`${API_BASE_URL}/Point`, pointData);
+            //const response = await axios.post(`${API_BASE_URL}/Point`, pointData);
+            const response = await API.post(`/Point`, pointData);
             return response.data.value;
         } catch (error) {
             console.error('Error adding point:', error);
@@ -34,7 +37,8 @@ export const deleteFeature = createAsyncThunk(
     'objects/deleteFeature',
     async (id) => {
         try {
-            await axios.delete(`${API_BASE_URL}/Point/${id}`);
+            //await axios.delete(`${API_BASE_URL}/Point/${id}`);
+            await API.delete(`/Point/${id}`);
             return id;
         } catch (error) {
             console.error('Error deleting feature:', error);
@@ -47,7 +51,8 @@ export const updateFeature = createAsyncThunk(
     'objects/updateFeature',
     async ({ id, data }) => {
         try {
-            const response = await axios.put(`${API_BASE_URL}/Point/${id}`, data);
+            //const response = await axios.put(`${API_BASE_URL}/Point/${id}`, data);
+            const response = await API.put(`/Point/${id}`, data);
             return response.data.value;
         } catch (error) {
             console.error('Error updating feature:', error);

@@ -1,0 +1,76 @@
+h1{
+    color: white;
+    width: 60vh;
+    margin-bottom: 20px;
+}
+label{
+    color: white;
+}
+.form-container p{
+    color: white;
+}
+p{
+    color: green;
+}
+.form-container{
+    background-color: hsla(209, 100%, 8%, 0.667);
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    height: auto;
+    padding: 50px;
+    border-radius: 30px;
+    
+}
+.background {
+    background-image: url(../assets/bg.jpg);
+    background-size: cover;
+    background-position: center; 
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 100%;
+    display: flex;          /* Add this to make it a flex container */
+    align-items: center;    /* Vertically center the child */
+    justify-content: center; /* Horizontally center the child */
+
+}
+.navigate{
+    display: inline-block;
+
+}
+.form-container button{
+    width: 100%;
+    margin: 20px 0px;
+}
+.form-container input{
+    width: 100%; /* Genişlik yüzdeye ayarlanabilir */
+    
+    padding: 10px 15px; /* İç dolgu */
+    margin: 10px 0; /* Dış boşluk */
+    border: 1px solid #ccc; /* Kenar rengi */
+    border-radius: 5px; /* Köşeleri yuvarlama */
+    font-size: 16px; /* Yazı tipi boyutu */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Hafif gölge */
+    transition: border-color 0.3s, box-shadow 0.3s; /* Geçiş efekti */
+}
+.form-container input:focus {
+    border-color: #646cff; /* Mavi kenar */
+    outline: none; /* Varsayılan mavi sınır iptali */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Hafif mavi parıltı */
+  }
+
+  .names {
+    width: 46%;
+    display: inline-block;
+    margin-right: 8%; /* Adds 5% space to the right of the first .names */
+}
+
+/* Remove margin from the second .names to prevent extra space at the end */
+.names:nth-child(2) {
+    margin-right: 0;
+}
+.form-container a{
+    text-decoration: none;
+    cursor: pointer;
+    margin-left: 10px;
+}
