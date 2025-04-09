@@ -30,11 +30,11 @@ const SignUp = () => {
         formData
       );
       console.log("Sign-Up Successful:", response.data);
-      setSuccess(true); // Show success message
-      setError(""); // Clear any previous errors
+      setSuccess(true);
+      setError("");
     } catch (err) {
       console.error("Error during sign-up:", err);
-      setError("Sign-up failed. Please try again."); // Show error message
+      setError("Sign-up failed. Please try again.");
       setSuccess(false);
     }
   };

@@ -9,7 +9,10 @@ import { offEditPanel } from "../src/redux/panelSlice";
 import ConfirmPanel from "./ConfirmPanel";
 import { onEdit } from "../src/redux/editSlice";
 import { enableTranslateMode } from "../src/utils/enableDragMode";
-
+import API from "../src/axios";
+const token = localStorage.getItem('token')
+const decodedToken = JSON.parse(atob(token.split('.')[1]));
+const userRole = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
 const DuzenlePaneli = () => {
     const dispatch = useDispatch();
     const selectedFeature = useSelector(state => state.feature.feature);
@@ -119,7 +122,6 @@ const DuzenlePaneli = () => {
             return `${seconds} second`;
         }
     }
-    
     return (
         <>
             <Modal isOpen={isOpen} onClose={handleClose} title="Editing Feature">
@@ -154,6 +156,13 @@ const DuzenlePaneli = () => {
                                         <td><strong>Last Update:</strong> </td>
                                         <td>{formatRelativeTime(selectedFeature.createdDate)}</td>
                                     </tr>
+                                    {userRole === 'admin' && 
+                                    <tr>
+                                        <td><strong>UserId:</strong></td>
+                                        <td>{selectedFeature.userId}</td>
+                                    </tr>
+                                    }
+                                    
                                 </tbody>
                             </table>
                         </div>

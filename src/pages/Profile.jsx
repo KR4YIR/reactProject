@@ -6,9 +6,8 @@ import "./profile.css"
 import { logout } from "../redux/authSlice";
 
 const Profile = () => {
-    const dispatch = useDispatch();
     const navigate = useNavigate();
-    
+    const dispatch = useDispatch();
     const { user, isAuthenticated } = useSelector(state => state.auth);
 
     useEffect(() => {

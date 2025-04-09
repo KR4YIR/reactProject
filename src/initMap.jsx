@@ -104,7 +104,7 @@ const InitMap = () => {
           
           const pointData = selectedFeature.get('pointData');
           if(pointData){
-            
+            //console.log(pointData)
             dispatch(setFeature(pointData));
             if (!selectedFeature.getId()) {
               selectedFeature.setId(pointData.id);

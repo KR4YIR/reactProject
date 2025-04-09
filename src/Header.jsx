@@ -13,23 +13,27 @@ function Header() {
   const [isQueryPanelOpen, setIsQueryPanelOpen] = useState(false);
   const [isAddPointPanelOpen, setIsAddPointPanelOpen] = useState(false);
   const visibility = useSelector(state => state.Edit.edit)
+  const token = localStorage.getItem('token')
+  const decodedToken = JSON.parse(atob(token.split('.')[1]));
+  const userRole = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+  console.log(userRole);
+
   return (
     !visibility && (
     <header>
       <div className='Header'>
         <h1>Türkiye Haritası</h1>
         <div className='button'>
-        
-          
-        
         <>
         <button onClick={() => enableDrawMode('Point', dispatch, setIsAddPointPanelOpen)}>Add Point</button>
         <button onClick={() => enableDrawMode('LineString', dispatch, setIsAddPointPanelOpen)}>Add Linestring</button>
         <button onClick={() => enableDrawMode('Polygon', dispatch, setIsAddPointPanelOpen)}>Add Polygon</button>
         <button onClick={() => setIsQueryPanelOpen(true)}>Query Panel</button>
         <button onClick={() => navigate('/Profile')}>Profile</button>
+        {/* {userRole === 'user' && <button onClick={() => navigate('/Profile')}>Profile</button>} */}
+        {userRole === 'admin' && <button className='admin-panel'>Admin Panel</button>}
         <button onClick={() => dispatch(logout())}>LogOut</button>
-        
+
         
         
         </>
