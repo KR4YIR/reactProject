@@ -5,6 +5,7 @@ import featureReducer from './featureSlice'
 import panelReducer from './panelSlice'
 import editReducer from './editSlice'
 import authReducer from './authSlice'
+import userReducer from './userSlice'
 export const store = configureStore({
   reducer: {
     object: objectReducer,
@@ -12,6 +13,7 @@ export const store = configureStore({
     feature: featureReducer,
     panel: panelReducer,
     Edit: editReducer,
-    auth: authReducer
+    auth: authReducer,
+    user: userReducer,
   },
 })

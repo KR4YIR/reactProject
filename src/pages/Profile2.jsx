@@ -42,7 +42,7 @@ const Profile2 = () => {
         <nav aria-label="breadcrumb" className="main-breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item" onClick={handleHome}><a>Home</a></li>
-            {userRole === 'admin' &&  <li className="breadcrumb-item"><a href="javascript:void(0)">User</a></li>}
+            {userRole === 'admin' &&  <li className="breadcrumb-item"><a >User</a></li>}
 
            
             <li className="breadcrumb-item active" aria-current="page">User Profile</li>
@@ -65,7 +65,7 @@ const Profile2 = () => {
                     {/* <p className="text-secondary mb-1">Full Stack Developer</p>
                     <p className="text-muted font-size-sm">Bay Area, San Francisco, CA</p> */}
                     <button className="btn btn-primary" onClick={handleHome}>Home</button>
-                    <button className="btn btn-outline-primary" onClick={()=>dispatch(logout())}>LogOut</button>
+                    <button className="btn btn-outline-primary" onClick={handleLogOut}>LogOut</button>
                   </div>
                 </div>
               </div>

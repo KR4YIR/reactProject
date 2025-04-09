@@ -9,10 +9,11 @@ import { offEditPanel } from "../src/redux/panelSlice";
 import ConfirmPanel from "./ConfirmPanel";
 import { onEdit } from "../src/redux/editSlice";
 import { enableTranslateMode } from "../src/utils/enableDragMode";
-import API from "../src/axios";
-const token = localStorage.getItem('token')
-const decodedToken = JSON.parse(atob(token.split('.')[1]));
-const userRole = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+import { getUserById } from "../src/redux/userSlice";
+import AdminUserPanel from "./AdminUserPanel";
+import { clearSelectedUser } from "../src/redux/userSlice";
+
+
 const DuzenlePaneli = () => {
     const dispatch = useDispatch();
     const selectedFeature = useSelector(state => state.feature.feature);
@@ -22,7 +23,15 @@ const DuzenlePaneli = () => {
     const [editedName, setEditedName] = useState("");
     const [confirmResolve, setConfirmResolve] = useState(null); // Promise'i çözmek için
     const [isConfirmPanelOpen, setIsConfirmPanelOpen] = useState(false)
-    
+    const [isUserPanelOpen, setIsUserPanelOpen] = useState(false)
+    const user = useSelector(state => state.user);
+    const token = localStorage.getItem('token')
+    const decodedToken = JSON.parse(atob(token.split('.')[1]));
+    const userRole = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+    const onClose = () =>{
+        setIsUserPanelOpen(false);
+        dispatch(clearSelectedUser());
+    }
     const showConfirm = () => {
         return new Promise((resolve) => {
             setConfirmResolve(() => resolve);
@@ -102,6 +111,20 @@ const DuzenlePaneli = () => {
         dispatch(closePanel());
         onEditFunction();
     }
+    const handleGetUser = (userId) =>{
+        
+        dispatch(getUserById(userId))
+        
+    }
+    useEffect(() => {
+        if (user) {
+            console.log("Fetched user from Redux:", user);
+
+            user.selectedUser!=null && setIsUserPanelOpen(true);
+            user.selectedUser==null && setIsUserPanelOpen(false);
+        }
+    }, [user]);
+    
     function formatRelativeTime(createdDate) {
         const now = new Date();
         const created = new Date(createdDate);
@@ -159,7 +182,16 @@ const DuzenlePaneli = () => {
                                     {userRole === 'admin' && 
                                     <tr>
                                         <td><strong>UserId:</strong></td>
-                                        <td>{selectedFeature.userId}</td>
+                                        <td>
+                                            <a href="#" onClick={(e) => {
+                                                    e.preventDefault(); // link davranışını engelle
+                                                    handleGetUser(selectedFeature.userId); // fonksiyonu çağır
+                                            }}>
+                                                {selectedFeature.userId}
+                                            </a>
+                                        </td>
+
+
                                     </tr>
                                     }
                                     
@@ -189,6 +221,11 @@ const DuzenlePaneli = () => {
                 isOpen={isConfirmPanelOpen}
                 onClose={() => setIsConfirmPanelOpen(false)}
                 onConfirm={(value) => handleConfirmResult(value)}                
+            />
+            <AdminUserPanel
+                isOpen={isUserPanelOpen}
+                onClose={() => onClose()}
+                user = {user.selectedUser}               
             />
         </>
     );

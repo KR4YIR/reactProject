@@ -45,7 +45,7 @@ const InitMap = () => {
 
   const dispatch = useDispatch();
   const mapRef = useRef(null);
-
+  
   useEffect(() => {
   
 

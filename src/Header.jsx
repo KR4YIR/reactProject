@@ -17,7 +17,7 @@ function Header() {
   const decodedToken = JSON.parse(atob(token.split('.')[1]));
   const userRole = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
   console.log(userRole);
-
+ 
   return (
     !visibility && (
     <header>
