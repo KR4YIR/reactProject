@@ -58,7 +58,7 @@ const InitMap = () => {
             return new Style({
               image: new CircleStyle({
                 radius: 6,
-                fill: new Fill({ color: 'rgba(255, 0, 0, 0.8)' }),
+                fill: new Fill({ color: 'rgba(255, 0, 0, 0.51)' }),
                 stroke: new Stroke({ color: 'white', width: 2 })
               }),
             });

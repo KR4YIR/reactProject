@@ -6,6 +6,7 @@ import panelReducer from './panelSlice'
 import editReducer from './editSlice'
 import authReducer from './authSlice'
 import userReducer from './userSlice'
+import countReducer from './countSlice'
 export const store = configureStore({
   reducer: {
     object: objectReducer,
@@ -15,5 +16,6 @@ export const store = configureStore({
     Edit: editReducer,
     auth: authReducer,
     user: userReducer,
+    count: countReducer,
   },
 })

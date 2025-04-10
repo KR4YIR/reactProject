@@ -8,7 +8,6 @@ export const getAllObjects = createAsyncThunk(
     'objects/getAllObjects',
     async () => {
         try {
-            //const response = await axios.get(`${API_BASE_URL}/Point`);
             const response = await API.get(`/Point`);
             return response.data.value || [];
         } catch (error) {
@@ -50,7 +49,6 @@ export const updateFeature = createAsyncThunk(
     'objects/updateFeature',
     async ({ id, data }) => {
         try {
-            //const response = await axios.put(`${API_BASE_URL}/Point/${id}`, data);
             const response = await API.put(`/Point/${id}`, data);
             return response.data.value;
         } catch (error) {

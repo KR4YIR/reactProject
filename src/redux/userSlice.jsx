@@ -24,12 +24,26 @@ export const getAllUser = createAsyncThunk(
         }
     }
 );
-
+export const updateUser = createAsyncThunk(
+    'users/updateUser',
+    async ({data}) => {
+        try {
+            
+            const response = await API.put(`/Users/UpdateMe`, data);
+            
+            return response.data;
+        } catch (error) {
+            console.error('Error updating feature:', error);
+            throw error;
+        }
+    }
+);
 const userSlice = createSlice({
     name: 'users',
     initialState: {
         selectedUser: null,
         Users: [],
+        user: null,
     },
     reducers: {
         clearSelectedUser: (state) => {
@@ -42,6 +56,8 @@ const userSlice = createSlice({
             state.selectedUser = action.payload;
         }).addCase(getAllUser.fulfilled,(state,action)=> {
             state.Users = action.payload;
+        }).addCase(updateUser.fulfilled, (state, action) => {
+            state.user = action.payload;
         });
     }
 });

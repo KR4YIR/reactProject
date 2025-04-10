@@ -11,6 +11,9 @@
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 
 }
+.btn{
+    margin-right: 5px;
+}
 .profile-container{
     background-color: rgba(85, 72, 0, 0.963);
     height: auto;
