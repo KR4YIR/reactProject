@@ -4,7 +4,6 @@ import SignIn from './pages/SignIn'
 import SignUp from './pages/SignUp'
 import Map from "./Map";
 import PrivateRoute from "./utils/PrivateRoute";
-import Profile from "./pages/Profile";
 import Profile2 from "./pages/Profile2";
 function App() {
   

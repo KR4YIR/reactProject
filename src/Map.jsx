@@ -10,7 +10,7 @@ import ConfirmPanel from "../public/ConfirmPanel";
 import { StopEditButton } from "./StopEditButton";
 
 const Map = () => {
-    const [isConfirmPanelOpen, setIsConfirmPanelOpen] = useState(false);
+  const [isConfirmPanelOpen, setIsConfirmPanelOpen] = useState(false);
   const dispatch = useDispatch();
   const { objects } = useSelector(state => state.object);
   

@@ -13,11 +13,6 @@ const QueryPanel = ({ isOpen, onClose }) => {
     const { objects } = useSelector(state => state.object);
     const [animationClass, setAnimationClass] = useState('');
     const panelRef = useRef(null);
-    
-
-   
-    
-    
     useEffect(() => {
         if (isOpen) {
             setAnimationClass('panel-open');

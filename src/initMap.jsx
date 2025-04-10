@@ -222,9 +222,9 @@ const InitMap = () => {
     <div ref={mapRef} style={{ width: '100%', height: '100vh' }}></div>
     <DuzenlePaneli/>
     <ConfirmPanel
-        isOpen={isConfirmPanelOpen}
-        onClose={() => setIsConfirmPanelOpen(false)}
-        onConfirm={(value) => handleConfirmResult(value)}                
+      isOpen={isConfirmPanelOpen}
+      onClose={() => setIsConfirmPanelOpen(false)}
+      onConfirm={(value) => handleConfirmResult(value)}                
     />
   </>)
   

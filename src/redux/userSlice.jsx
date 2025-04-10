@@ -13,11 +13,23 @@ export const getUserById = createAsyncThunk(
         }
     }
 );
+export const getAllUser = createAsyncThunk(
+    'users/getAllUser',
+    async (_, { rejectWithValue }) => {
+        try {
+            const response = await API.get(`/Users/All`);
+            return response.data;
+        } catch (error) {
+            return rejectWithValue(error.response?.data || "Unknown error");
+        }
+    }
+);
 
 const userSlice = createSlice({
     name: 'users',
     initialState: {
         selectedUser: null,
+        Users: [],
     },
     reducers: {
         clearSelectedUser: (state) => {
@@ -28,6 +40,8 @@ const userSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getUserById.fulfilled, (state, action) => {
             state.selectedUser = action.payload;
+        }).addCase(getAllUser.fulfilled,(state,action)=> {
+            state.Users = action.payload;
         });
     }
 });

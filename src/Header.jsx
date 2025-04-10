@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import {useState } from 'react';
 import '../style/Header.css';
 import AddPointPanel from '../public/AddPointPanel';
 import QueryPanel from '../public/QueryPanel';
@@ -7,10 +7,12 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { logout } from './redux/authSlice';
 import { useNavigate } from 'react-router-dom';
+import UsersPanel from '../public/UsersPanel';
 function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isQueryPanelOpen, setIsQueryPanelOpen] = useState(false);
+  const [isUsersPanelOpen, setIsUsersPanelOpen] = useState(false);
   const [isAddPointPanelOpen, setIsAddPointPanelOpen] = useState(false);
   const visibility = useSelector(state => state.Edit.edit)
   const token = localStorage.getItem('token')
@@ -31,7 +33,7 @@ function Header() {
         <button onClick={() => setIsQueryPanelOpen(true)}>Query Panel</button>
         <button onClick={() => navigate('/Profile')}>Profile</button>
         {/* {userRole === 'user' && <button onClick={() => navigate('/Profile')}>Profile</button>} */}
-        {userRole === 'admin' && <button className='admin-panel'>Admin Panel</button>}
+        {userRole === 'admin' && <button className='admin-panel' onClick={() => setIsUsersPanelOpen(true)}>Admin Panel</button>}
         <button onClick={() => dispatch(logout())}>LogOut</button>
 
         
@@ -52,7 +54,11 @@ function Header() {
       {/* Tablo Paneli */}
       <QueryPanel 
         isOpen={isQueryPanelOpen} 
-        onClose={() => setIsQueryPanelOpen(false)} 
+        onClose={() => setIsQueryPanelOpen(false)}
+      />
+      <UsersPanel 
+        isOpen={isUsersPanelOpen} 
+        onClose={() => setIsUsersPanelOpen(false)} 
       />
     </header>
   ));

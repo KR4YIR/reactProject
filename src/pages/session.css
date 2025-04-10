@@ -16,11 +16,15 @@ p{
     background-color: hsla(209, 100%, 8%, 0.667);
     display: flex;
     flex-direction: column;
-    width: fit-content;
+    width: 100%;
     height: auto;
     padding: 50px;
     border-radius: 30px;
-    
+    max-width: 700px;
+    margin: 0;
+}
+.form-container label{
+    width: 100%;
 }
 .background {
     background-image: url(../assets/bg.jpg);
@@ -52,6 +56,7 @@ p{
     font-size: 16px; /* Yazı tipi boyutu */
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Hafif gölge */
     transition: border-color 0.3s, box-shadow 0.3s; /* Geçiş efekti */
+    width: 100%;
 }
 .form-container input:focus {
     border-color: #646cff; /* Mavi kenar */

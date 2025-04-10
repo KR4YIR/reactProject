@@ -46,7 +46,8 @@ const SignUp = () => {
       {success && <p>Sign-up successful!</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
       <form onSubmit={handleSubmit}>
-      <div className="names">
+        
+          <div className="names">
             <label>
             First Name:
             <input
@@ -58,8 +59,8 @@ const SignUp = () => {
             />
             </label>
             <br />
-        </div>
-        <div className="names">
+          </div>
+          <div className="names">
             <label>
             Last Name:
             <input
@@ -70,8 +71,9 @@ const SignUp = () => {
                 required
             />
             </label>
-        </div>
+          </div>
         <br />
+        
         <label>
           Username:
           <input
@@ -82,6 +84,7 @@ const SignUp = () => {
             required
           />
         </label>
+        
         <br />
         <label>
           Email:
