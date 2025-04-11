@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import API from '../axios';
-const API_BASE_URL = "https://localhost:7223/api";
+const API_BASE_URL = "localhost:5017/api";
 
 
 // getallobj

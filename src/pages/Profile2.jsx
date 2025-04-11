@@ -24,7 +24,6 @@ const Profile2 = () => {
   const [objectCount2, setObjectCount2] = useState(useSelector(state=> state.count.sum));
 
   useEffect(() => {
-    // Eğer giriş yapılmamışsa login sayfasına yönlendir
     if (!isAuthenticated) {
       navigate("/signIn");
     } else if (!user) {
@@ -136,7 +135,7 @@ const Profile2 = () => {
               <div className="card-body">
                 {[{ label: "Name", key: "name" }, { label: "Surname", key: "surname" }, { label: "Username", key: "username" }, { label: "Email", key: "email" }].map((info, i) => (
                   <React.Fragment key={i}>
-                    <div className="row mb-3">
+                    <div className="row mb-3 profile-row">
                       <div className="col-sm-3">
                         <h6 className="mb-0">{info.label}</h6>
                       </div>
@@ -144,8 +143,8 @@ const Profile2 = () => {
                         {isEditing ? (
                           <input
                             type="text"
-                            className="form-control"
-                            value={info.key === "name" ? editedName : info.key === "username" ? editedUserName : editedEmail}
+                            className="form-control profile-input"
+                            value={info.key === "name" ? editedName :info.key === "surname" ? editedSurname : info.key === "username" ? editedUserName : editedEmail}
                             onChange={(e) => {
                               if (info.key === "name") {
                                 setEditedName(e.target.value);

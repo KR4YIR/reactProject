@@ -103,3 +103,19 @@ body{
     box-shadow: none!important;
 }
 
+.profile-input {
+    height: 30px;
+    padding: 4px 8px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .form-control {
+    height: 30px;  /* İdeal yükseklik */
+    padding: 4px 8px;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+  .profile-row {
+    min-height: 38px; /* ya da önce input ve div'lerin yüksekliğini ölçerek eşitle */
+  }
+  

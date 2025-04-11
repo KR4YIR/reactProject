@@ -26,7 +26,7 @@ const SignUp = () => {
     e.preventDefault(); // Prevent form reload
     try {
       const response = await axios.post(
-        "https://localhost:7223/api/Users/SignUp",
+        "http://localhost:5017/api/Users/SignUp",
         formData
       );
       console.log("Sign-Up Successful:", response.data);
