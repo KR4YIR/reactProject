@@ -12,8 +12,8 @@ import { enableTranslateMode } from "../src/utils/enableDragMode";
 import { getUserById } from "../src/redux/userSlice";
 import AdminUserPanel from "./AdminUserPanel";
 import { clearSelectedUser } from "../src/redux/userSlice";
-
-
+import { closeUPanel, openUPanel } from "../src/redux/panelSlice";
+import { setSelectedEUser } from "../src/redux/userSlice";
 const DuzenlePaneli = () => {
     const dispatch = useDispatch();
     const selectedFeature = useSelector(state => state.feature.feature);
@@ -23,15 +23,11 @@ const DuzenlePaneli = () => {
     const [editedName, setEditedName] = useState("");
     const [confirmResolve, setConfirmResolve] = useState(null); // Promise'i çözmek için
     const [isConfirmPanelOpen, setIsConfirmPanelOpen] = useState(false)
-    const [isUserPanelOpen, setIsUserPanelOpen] = useState(false)
     const user = useSelector(state => state.user);
     const token = localStorage.getItem('token')
     const decodedToken = JSON.parse(atob(token.split('.')[1]));
     const userRole = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
-    const onClose = () =>{
-        setIsUserPanelOpen(false);
-        dispatch(clearSelectedUser());
-    }
+
     const showConfirm = () => {
         return new Promise((resolve) => {
             setConfirmResolve(() => resolve);
@@ -119,11 +115,11 @@ const DuzenlePaneli = () => {
     useEffect(() => {
         if (user) {
             console.log("Fetched user from Redux:", user);
-
-            user.selectedUser!=null && setIsUserPanelOpen(true);
-            user.selectedUser==null && setIsUserPanelOpen(false);
+            dispatch(setSelectedEUser(user.selectedUser));
+            user.selectedUser!=null && dispatch(openUPanel());
+            user.selectedUser==null && dispatch(closeUPanel());
         }
-    }, [user]);
+    }, [user.selectedUser]);
     
     function formatRelativeTime(createdDate) {
         const now = new Date();
@@ -222,11 +218,7 @@ const DuzenlePaneli = () => {
                 onClose={() => setIsConfirmPanelOpen(false)}
                 onConfirm={(value) => handleConfirmResult(value)}                
             />
-            <AdminUserPanel
-                isOpen={isUserPanelOpen}
-                onClose={() => onClose()}
-                user = {user.selectedUser}               
-            />
+            <AdminUserPanel/>
         </>
     );
 

@@ -38,10 +38,39 @@ export const updateUser = createAsyncThunk(
         }
     }
 );
+export const updateUserA = createAsyncThunk(
+    'users/updateUserA',
+    async ({userId,data}) => {
+        try {
+            
+            const response = await API.put(`/Users/${userId}`, data);
+            
+            return response.data;
+        } catch (error) {
+            console.error('Error updating feature:', error);
+            throw error;
+        }
+    }
+);
+export const deleteUser = createAsyncThunk(
+    'users/deleteUser',
+    async ({userId}) => {
+        try {
+            
+            const response = await API.delete(`/Users/${userId}`);
+            
+            return response.data;
+        } catch (error) {
+            console.error('Error updating feature:', error);
+            throw error;
+        }
+    }
+);
 const userSlice = createSlice({
     name: 'users',
     initialState: {
         selectedUser: null,
+        selectedEUser: null,
         Users: [],
         user: null,
     },
@@ -49,6 +78,13 @@ const userSlice = createSlice({
         clearSelectedUser: (state) => {
             state.selectedUser = null;
         },
+        clearSelectedEUser: (state) => {
+            state.selectedEUser = null;
+        },
+        setSelectedEUser: (state, action) => {
+            state.selectedEUser = action.payload;
+        },
+    
     },
     
     extraReducers: (builder) => {
@@ -58,8 +94,12 @@ const userSlice = createSlice({
             state.Users = action.payload;
         }).addCase(updateUser.fulfilled, (state, action) => {
             state.user = action.payload;
+        }).addCase(updateUserA.fulfilled, (state, action) => {
+            state.user = action.payload;
+        }).addCase(deleteUser.fulfilled, (state, action) => {
+            state.user = action.payload;
         });
     }
 });
-export const { clearSelectedUser } = userSlice.actions;
+export const { clearSelectedUser, clearSelectedEUser, setSelectedEUser} = userSlice.actions;
 export default userSlice.reducer;
