@@ -113,7 +113,7 @@ const DuzenlePaneli = () => {
         
     }
     useEffect(() => {
-        if (user) {
+        if (user && userRole === 'admin') {
             console.log("Fetched user from Redux:", user);
             dispatch(setSelectedEUser(user.selectedUser));
             user.selectedUser!=null && dispatch(openUPanel());

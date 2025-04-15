@@ -15,15 +15,16 @@ export const getUserById = createAsyncThunk(
 );
 export const getAllUser = createAsyncThunk(
     'users/getAllUser',
-    async (_, { rejectWithValue }) => {
+    async ({ page = 1, pageSize = 8 }, { rejectWithValue }) => {
         try {
-            const response = await API.get(`/Users/All`);
+            const response = await API.get(`/Users/All?page=${page}&pageSize=${pageSize}`);
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response?.data || "Unknown error");
         }
     }
 );
+
 export const updateUser = createAsyncThunk(
     'users/updateUser',
     async ({data}) => {

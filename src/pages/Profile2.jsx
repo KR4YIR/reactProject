@@ -114,12 +114,6 @@ const Profile2 = () => {
             <div className="card">
               <div className="card-body">
                 <div className="d-flex flex-column align-items-center text-center">
-                  <img
-                    src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                    alt="Admin"
-                    className="rounded-circle"
-                    width="150"
-                  />
                   <div className="mt-3">
                     <h4>{user.name} {user.surname}</h4>
                     <button className="btn btn-primary" onClick={handleHome}>Home</button>

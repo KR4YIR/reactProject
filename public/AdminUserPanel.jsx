@@ -7,9 +7,15 @@ import ConfirmPanel from "./ConfirmPanel";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { closeUPanel } from "../src/redux/panelSlice";
-import { setSelectedEUser, clearSelectedEUser } from "../src/redux/userSlice";
+import { clearSelectedEUser } from "../src/redux/userSlice";
+import { deleteUser } from "../src/redux/userSlice";
+import { offEditPanel, onEditPanel } from "../src/redux/panelSlice";
 const AdminUserPanel = () => {
-    const [isEditing, setIsEditing] = useState(false);
+  const token = localStorage.getItem('token')
+    const decodedToken = JSON.parse(atob(token.split('.')[1]));
+    const userRole = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+    if(userRole !== 'admin') return null; // Eğer kullanıcı admin değilse hiçbir şey render etme
+    
     const [username , setUsername] = useState('');
     const [name , setName] = useState('');
     const [surname , setSurname] = useState('');
@@ -18,6 +24,7 @@ const AdminUserPanel = () => {
     const [confirmResolve, setConfirmResolve] = useState(null); // Promise'i çözmek için
     const isOpenU = useSelector((state) => state.panel.isOpenU);
     const user = useSelector((state) => state.user.selectedEUser);
+    const isEditingPanel = useSelector((state) => state.panel.isEdit);
     const showConfirm = () => {
       return new Promise((resolve) => {
           setConfirmResolve(() => resolve);
@@ -41,16 +48,23 @@ const AdminUserPanel = () => {
     console.log("showing user",user)
    
     const dispatch = useDispatch();
-    const handleDelete = () => {
-        console.log("Delete button clicked");
+    const handleDelete = async() => {
+        const userConfirmed = await showConfirm();
+        if(userConfirmed){
+          console.log("Delete button clicked", user.id);
+        await dispatch(deleteUser({userId:user.id}));
+        toast.success("User deleted successfully!");
+        dispatch(closeUPanel())
+        dispatch (clearSelectedEUser());
+        }else{toast.info("User not deleted!")}
     }
     const handleEdit = () => {
         console.log("Edit button clicked");
-        setIsEditing(true);
+        dispatch(onEditPanel());
     };
     const handleCancelEdit = () => {
         toast.info("Edit cancelled!");
-        setIsEditing(false);
+        dispatch(offEditPanel())
         setUsername(user.username);
         setName(user.name);
         setEmail(user.email);
@@ -68,7 +82,8 @@ const AdminUserPanel = () => {
         handleCancelEdit();
         return; // Kullanıcı işlemi iptal ettiyse çık
       }
-      setIsEditing(false);
+      
+      dispatch(offEditPanel());
       const updatedUser = {
         ...user,
         username: username,
@@ -89,7 +104,7 @@ const AdminUserPanel = () => {
       <>
           <Modal isOpen={isOpenU} onClose={onClose} title="Selected User">
           <table className="table-container">
-            {!isEditing ? (
+            {!isEditingPanel ? (
               <tbody>
                 <tr>
                   <td>UserId</td>
@@ -139,7 +154,7 @@ const AdminUserPanel = () => {
           </table>
         
           <div className="edit-butonlari">
-            {isEditing ? (
+            {isEditingPanel ? (
               <>
                 <button className="save-btn" onClick={handleEditSave}>Save</button>
                 <button className="close-btn" onClick={handleCancelEdit}>Cancel Edit</button>

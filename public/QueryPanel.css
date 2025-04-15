@@ -30,8 +30,8 @@
     flex-direction: column;
     width: 80%;
     max-width: 900px;
-    height: 80%;
-    max-height: 700px;
+    height: 100%;
+    max-height: 663px;
     z-index: 1001;
     opacity: 0;
     transition: transform 0.3s ease, opacity 0.3s ease;
@@ -244,4 +244,22 @@
     overflow: hidden; /* Hides the overflowing text */
     text-overflow: ellipsis; /* Adds the ellipsis */
     max-width: 150px; /* Sets the maximum width for the cell */
+}
+.pagination button{
+    background-color: hsl(207, 100%, 34%);
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+    margin-bottom: 15px;
+    margin-inline: 10px;
+}
+.pagination button:hover {
+    background-color: hsl(207, 100%, 45%);
+}
+.pagination button:disabled {
+    background-color: hsl(207, 100%, 20%);
+    cursor: not-allowed;
 }

@@ -8,10 +8,18 @@ import { setSelectedEUser } from '../src/redux/userSlice';
 import { deleteUser } from '../src/redux/userSlice';
 import ConfirmPanel from './ConfirmPanel';
 import { toast } from 'react-toastify';
+import { onEditPanel } from '../src/redux/panelSlice';
 const UsersPanel = ({ isOpen, onClose }) => {
+    const token = localStorage.getItem('token')
+    const decodedToken = JSON.parse(atob(token.split('.')[1]));
+    const userRole = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+    if(userRole !== 'admin') return null; // Eğer kullanıcı admin değilse hiçbir şey render etme
     const [isConfirmPanelOpen, setIsConfirmPanelOpen] = useState(false);
     const [confirmResolve, setConfirmResolve] = useState(null); // Promise'i çözmek için
-
+    const [page, setPage] = useState(1);
+    const [pageSize] = useState(8); // Sabit tutabilirsin ya da dropdown ile değiştirebilirsin
+    const [totalPages, setTotalPages] = useState(1);
+    
     const showConfirm = () => {
         return new Promise((resolve) => {
             setConfirmResolve(() => resolve);
@@ -32,8 +40,16 @@ const UsersPanel = ({ isOpen, onClose }) => {
         dispatch(openUPanel());
     };
     useEffect(() => {
-        dispatch(getAllUser()).then((action) => {setUsers(action.payload.value)});
-      }, [dispatch]);
+        dispatch(getAllUser({ page, pageSize })).then((action) => {
+            if (action.payload?.success) {
+                
+                setUsers(action.payload.value.data);
+                console.log("action",users)
+                setTotalPages(Math.ceil(action.payload.value.totalCount / pageSize));
+            }
+        });
+    }, [dispatch, page]);
+    
       
    
     const user = useSelector(state => state.user.Users);
@@ -55,9 +71,10 @@ const UsersPanel = ({ isOpen, onClose }) => {
 
     if (!isOpen && animationClass !== 'panel-open') return null;
     const handleEdit = (item) => {
+        console.log("handleEdit",item)
         dispatch(setSelectedEUser(item));
         handleUserPanelOpen();
-
+        dispatch(onEditPanel());
     };
     const handleDelete = async(id) => {
         const userConfirmed = await showConfirm();
@@ -133,7 +150,14 @@ const UsersPanel = ({ isOpen, onClose }) => {
                                 </tr>
                             ))}
                             </tbody>
+
                         </table>
+                        <div className="pagination">
+                            <button disabled={page === 1} onClick={() => setPage(prev => prev - 1)}>Prev</button>
+                            <span>Page {page} of {totalPages}</span>
+                            <button disabled={page === totalPages} onClick={() => setPage(prev => prev + 1)}>Next</button>
+                        </div>
+
                     </div>
                 </div>
             </div>
