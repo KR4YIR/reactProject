@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import './session.css'
 import { useNavigate } from 'react-router-dom';
-
+import { toast, ToastContainer } from "react-toastify";
 const SignUp = () => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
@@ -29,11 +29,19 @@ const SignUp = () => {
         "http://localhost:5017/api/Users/SignUp",
         formData
       );
-      console.log("Sign-Up Successful:", response.data);
+      
+      
+      toast.success(`Sign-Up Successful! Confirmation code sent to ${formData.email}.`, {
+        onClose: () => {
+          // Navigate after the toast disappears
+          navigate('/SignIn');
+        }
+      });
       setSuccess(true);
       setError("");
     } catch (err) {
       console.error("Error during sign-up:", err);
+      toast.error("Sign-up failed. Please try again.");
       setError("Sign-up failed. Please try again.");
       setSuccess(false);
     }
@@ -118,6 +126,8 @@ const SignUp = () => {
       </form>
         
     </div>
+    <ToastContainer position="top-right" autoClose={3000} />
+
   </div>
   );
 };

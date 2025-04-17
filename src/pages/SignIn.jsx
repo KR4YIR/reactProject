@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
 import './session.css'
+import { toast, ToastContainer } from "react-toastify";
 const SignIn = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -16,12 +17,13 @@ const SignIn = () => {
                 email,
                 password
             });
+            console.log("Login response",response);
             const token = response.data.accessToken;
             dispatch(loginSuccess({ token }));
             navigate('/');
         } catch (error) {
             console.error('Login error:', error);
-            alert('Giriş başarısız');
+            toast.error(`Login failed. ${error.response.data}`);
         }
     };
     const handleSignUp = () =>{
@@ -44,6 +46,7 @@ const SignIn = () => {
                 </div>
             </div>
             
+                <ToastContainer position="top-right" autoClose={3000} />
             
         </div>
     );
