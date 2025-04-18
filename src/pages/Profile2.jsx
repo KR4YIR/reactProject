@@ -88,6 +88,9 @@ const Profile2 = () => {
     setIsEditing(true);
   }
 
+  const handlePassword = () => {
+    navigate('/ChangePassword');
+  }
   const handleLogOut = () => {
     dispatch(logout());
   }
@@ -169,7 +172,10 @@ const Profile2 = () => {
                         <button className="btn btn-secondary" onClick={handleCancel}>Cancel</button>
                       </div>
                     ) : (
-                      <a className="btn btn-info" onClick={handleEdit}>Edit</a>
+                      <>
+                        <a className="btn btn-info" style={{color:"white"}} onClick={handleEdit}>Edit</a>
+                        <a className="btn btn-info" style={{color:"white"}} onClick={handlePassword}>Change Password</a>
+                      </>
                     )}
                   </div>
                 </div>

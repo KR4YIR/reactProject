@@ -5,6 +5,7 @@ import SignUp from './pages/SignUp'
 import Map from "./Map";
 import PrivateRoute from "./utils/PrivateRoute";
 import Profile2 from "./pages/Profile2";
+import ChangePassword from "./pages/ChangePassword";
 function App() {
   
   
@@ -15,7 +16,8 @@ function App() {
         <Route path="/signIn" element={<SignIn/>}/>
         <Route path="/signUp" element={<SignUp/>}/>
         {/* <Route path="/profile" element={<Profile/>}/> */}
-        <Route path="/profile" element={<Profile2/>}/>
+        <Route path="/profile" element={<PrivateRoute><Profile2/></PrivateRoute>}/>
+        <Route path="/ChangePassword" element={<PrivateRoute><ChangePassword/></PrivateRoute>}/>
         <Route path="*" element={<NotFoundPage/>}/>
       </Routes>
     </>
