@@ -79,3 +79,12 @@ p{
     cursor: pointer;
     margin-left: 10px;
 }
+.form a{
+    color: rgb(255, 156, 156);
+    text-decoration: none;
+    cursor: pointer;
+    margin-left: 10px;
+}
+.form a:nth-of-type(2) {
+    margin-left: 25%;
+}

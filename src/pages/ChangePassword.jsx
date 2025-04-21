@@ -2,27 +2,29 @@ import React, { useState } from 'react';
 import API from '../axios';
 import { toast, ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import './changePassword.css'; 
+
 const ChangePassword = () => {
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const navigate = useNavigate();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (newPassword !== confirmPassword) {
             alert('New password and confirm password do not match!');
             return;
         }
-        // Send the request to the server
+
         try {
             const response = await API.post('/Users/change-password', {
-                currentPassword, // Updated key to match raw body
+                currentPassword,
                 newPassword,
             });
-    
+
             if (response.status === 200) {
                 toast.success('Password changed successfully!');
-                // Clear form inputs
                 setCurrentPassword('');
                 setNewPassword('');
                 setConfirmPassword('');
@@ -32,17 +34,16 @@ const ChangePassword = () => {
             }
         } catch (error) {
             console.error('Error during password change:', error);
-            const errorMessage = error.response.data.message;
+            const errorMessage = error.response?.data?.message || 'Error changing password.';
             toast.error(errorMessage);
         }
-    
     };
 
     return (
-        <div style={{ maxWidth: '400px', margin: '0 auto', padding: '20px' }}>
+        <div className="change-password-container">
             <h2>Change Password</h2>
             <form onSubmit={handleSubmit}>
-                <div style={{ marginBottom: '15px' }}>
+                <div className="form-group">
                     <label htmlFor="currentPassword">Old Password</label>
                     <input
                         type="password"
@@ -50,10 +51,9 @@ const ChangePassword = () => {
                         value={currentPassword}
                         onChange={(e) => setCurrentPassword(e.target.value)}
                         required
-                        style={{ width: '100%', padding: '8px', marginTop: '5px' }}
                     />
                 </div>
-                <div style={{ marginBottom: '15px' }}>
+                <div className="form-group">
                     <label htmlFor="newPassword">New Password</label>
                     <input
                         type="password"
@@ -61,10 +61,9 @@ const ChangePassword = () => {
                         value={newPassword}
                         onChange={(e) => setNewPassword(e.target.value)}
                         required
-                        style={{ width: '100%', padding: '8px', marginTop: '5px' }}
                     />
                 </div>
-                <div style={{ marginBottom: '15px' }}>
+                <div className="form-group">
                     <label htmlFor="confirmPassword">Confirm New Password</label>
                     <input
                         type="password"
@@ -72,17 +71,22 @@ const ChangePassword = () => {
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         required
-                        style={{ width: '100%', padding: '8px', marginTop: '5px' }}
                     />
                 </div>
-                <button type="submit" style={{ padding: '10px 20px' }}>
+                <button type="submit" className="submit-btn">
                     Change Password
                 </button>
-                <a href="/Profile" style={{ marginLeft: '10px', textDecoration: 'none', color: 'black',fontSize: '10px'}}>Back to Profile</a>
-                <a href="/ForgotPassword" style={{ marginLeft: '10px', textDecoration: 'none', color: 'black',fontSize: '10px'}}>Forgot Password?</a>
-                
+                <div className="links">
+                    <a href="/Profile">Back to Profile</a>
+                    <a href="/ForgotPassword">Forgot Password?</a>
+                </div>
             </form>
-            <ToastContainer autoClose={1000} position="top-right" theme="colored" onClose={()=>navigate('/')} />
+            <ToastContainer
+                autoClose={1000}
+                position="top-right"
+                theme="colored"
+                onClose={() => navigate('/')}
+            />
         </div>
     );
 };

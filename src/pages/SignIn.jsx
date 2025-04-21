@@ -29,7 +29,9 @@ const SignIn = () => {
     const handleSignUp = () =>{
         navigate('/SignUp')
     }
-
+    const handleForgotPassword = () => {
+        navigate('/forgot-password')
+    }
     return (
         <div className='background'>
             <div className='form-container'>
@@ -42,7 +44,11 @@ const SignIn = () => {
                     <button onClick={handleLogin}>Giriş Yap</button>
                     <p>Do no have an account?
                      <a onClick={handleSignUp}>SignUp</a>
+                     <a onClick={handleForgotPassword}>Forgot Your Password?</a>
+
                     </p>
+                    
+                
                 </div>
             </div>
             

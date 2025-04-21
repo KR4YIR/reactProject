@@ -6,6 +6,8 @@ import Map from "./Map";
 import PrivateRoute from "./utils/PrivateRoute";
 import Profile2 from "./pages/Profile2";
 import ChangePassword from "./pages/ChangePassword";
+import ResetPassword from "./pages/ResetPassword";
+import ForgotPassword from "./pages/ForgotPassword";
 function App() {
   
   
@@ -18,6 +20,8 @@ function App() {
         {/* <Route path="/profile" element={<Profile/>}/> */}
         <Route path="/profile" element={<PrivateRoute><Profile2/></PrivateRoute>}/>
         <Route path="/ChangePassword" element={<PrivateRoute><ChangePassword/></PrivateRoute>}/>
+        <Route path="/reset-password" element={<ResetPassword/>}/>
+        <Route path="/forgot-password" element={<ForgotPassword/>}/>
         <Route path="*" element={<NotFoundPage/>}/>
       </Routes>
     </>

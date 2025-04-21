@@ -120,7 +120,7 @@ const SignUp = () => {
         
         <button type="submit">Sign Up</button>
         <br />
-        <p className='navigate'>Already have an account?
+        <p className='navigate form'>Already have an account?
            <a className='navigate' onClick={handleLogin}> SignIn</a>
         </p>
       </form>
