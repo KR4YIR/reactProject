@@ -1,1 +1,1 @@
-This Project created for openlayer and front-end to api communication. 
+This project is designed for OpenLayers integration and facilitates front-end communication with an API. It enables seamless interaction between map-based data visualizations and backend services, supporting real-time updates and user interactions.
