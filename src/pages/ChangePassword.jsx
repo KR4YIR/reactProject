@@ -40,53 +40,55 @@ const ChangePassword = () => {
     };
 
     return (
-        <div className="change-password-container">
-            <h2>Change Password</h2>
-            <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label htmlFor="currentPassword">Old Password</label>
-                    <input
-                        type="password"
-                        id="currentPassword"
-                        value={currentPassword}
-                        onChange={(e) => setCurrentPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="newPassword">New Password</label>
-                    <input
-                        type="password"
-                        id="newPassword"
-                        value={newPassword}
-                        onChange={(e) => setNewPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="confirmPassword">Confirm New Password</label>
-                    <input
-                        type="password"
-                        id="confirmPassword"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <button type="submit" className="submit-btn">
-                    Change Password
-                </button>
-                <div className="links">
-                    <a href="/Profile">Back to Profile</a>
-                    <a href="/ForgotPassword">Forgot Password?</a>
-                </div>
-            </form>
-            <ToastContainer
-                autoClose={1000}
-                position="top-right"
-                theme="colored"
-                onClose={() => navigate('/')}
-            />
+        <div className="reset-password-background">
+            <div className="reset-password-container">
+                <h2>Change Password</h2>
+                <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <label htmlFor="currentPassword">Old Password</label>
+                        <input
+                            type="password"
+                            id="currentPassword"
+                            value={currentPassword}
+                            onChange={(e) => setCurrentPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="newPassword">New Password</label>
+                        <input
+                            type="password"
+                            id="newPassword"
+                            value={newPassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="confirmPassword">Confirm New Password</label>
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <button type="submit" className="submit-btn">
+                        Change Password
+                    </button>
+                    <div className="links">
+                        <a href="/Profile">Back to Profile</a>
+                        <a href="/ForgotPassword">Forgot Password?</a>
+                    </div>
+                </form>
+                <ToastContainer
+                    autoClose={1000}
+                    position="top-right"
+                    theme="colored"
+                    onClose={() => navigate('/')}
+                />
+            </div>
         </div>
     );
 };

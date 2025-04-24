@@ -11,7 +11,6 @@ import { onEdit } from "../src/redux/editSlice";
 import { enableTranslateMode } from "../src/utils/enableDragMode";
 import { getUserById } from "../src/redux/userSlice";
 import AdminUserPanel from "./AdminUserPanel";
-import { clearSelectedUser } from "../src/redux/userSlice";
 import { closeUPanel, openUPanel } from "../src/redux/panelSlice";
 import { setSelectedEUser } from "../src/redux/userSlice";
 const DuzenlePaneli = () => {
@@ -21,6 +20,7 @@ const DuzenlePaneli = () => {
     const isOpen = useSelector((state) => state.panel.isOpen);
     const [isEditing, setIsEditing] = useState(false); // Edit modu için state
     const [editedName, setEditedName] = useState("");
+    const [editedWkt, setEditedWkt] = useState("");
     const [confirmResolve, setConfirmResolve] = useState(null); // Promise'i çözmek için
     const [isConfirmPanelOpen, setIsConfirmPanelOpen] = useState(false)
     const user = useSelector(state => state.user);
@@ -52,6 +52,7 @@ const DuzenlePaneli = () => {
     useEffect(() => {
         if (selectedFeature) {
             setEditedName(selectedFeature.name || "");
+            setEditedWkt(selectedFeature.wkt || "");
             if(isEdit){
                 setIsEditing(isEdit);
                 dispatch(offEditPanel());
@@ -67,17 +68,19 @@ const DuzenlePaneli = () => {
         if(userConfirmed){
         const data = {
             name: editedName,
-            wkt: selectedFeature.wkt
+            wkt: editedWkt,
         }
         dispatch(updateFeature({ id: selectedFeature.id, data: data }));
         setIsEditing(false); // Edit modunu kapat
         dispatch(offEditPanel());
         toast.success("Feature updated successfully!");
         setEditedName(data.name);
+        setEditedWkt(data.wkt);
     }else{console.log("user chosse to not save the changes")}
     };
     const triggerCancel = () => {
         setEditedName(selectedFeature.name); // Eski değerlere dön
+        setEditedWkt(selectedFeature.wkt); // Eski değerlere dön
         setIsEditing(false); // Edit modunu kapat
         toast.warning("Updating cancelled!");
 
@@ -97,6 +100,7 @@ const DuzenlePaneli = () => {
         dispatch(clearFeature());
         dispatch(closePanel());
         setEditedName('')
+        setEditedWkt('')
     };
     const handleDragDrop = () => {
         enableTranslateMode(selectedFeature,dispatch,showConfirm);
@@ -169,7 +173,21 @@ const DuzenlePaneli = () => {
                                     </tr>
                                     <tr>
                                         <td><strong>wkt:</strong> </td>
-                                        <td>{selectedFeature.wkt}</td>
+                                        <td style={{padding:"0px 12px"}}>
+                                            {isEditing ? (
+                                                <input 
+                                                    type="text"
+                                                    value={editedWkt}
+                                                    onChange={(e) => setEditedWkt(e.target.value)}
+                                                />
+                                            ) : (
+                                                editedWkt
+                                            )}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Size:</strong> </td>
+                                        <td>{selectedFeature.size}</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Last Update:</strong> </td>

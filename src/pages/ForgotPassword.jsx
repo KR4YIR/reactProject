@@ -29,8 +29,8 @@ const ForgotPassword = () => {
     };
 
     return (
-        <>
-            <div className="forgot-password-container">
+        <div className="reset-password-background">
+            <div className="reset-password-container">
                 <h1>Forgot Password</h1>
                 <form onSubmit={handleForgotPassword}>
                     <div className="form-group">
@@ -50,7 +50,7 @@ const ForgotPassword = () => {
                 </div>
             </div>
             <ToastContainer position="top-right" autoClose={2000} theme="colored" />
-        </>
+        </div>
     );
 };
 

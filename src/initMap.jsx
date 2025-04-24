@@ -19,6 +19,8 @@ import { toast } from 'react-toastify';
 import { updateFeature } from './redux/objectSlice';
 import { useState } from 'react';
 import ConfirmPanel from '../public/ConfirmPanel';
+import { getLength, getArea } from 'ol/sphere';
+
 //export vectorSource
 export const vectorSource = new VectorSource(); // Make it a global export
 let mapInstance = null;
@@ -101,11 +103,39 @@ const InitMap = () => {
     select.on('select', function(e) {
         if (e.selected.length > 0) {
           const selectedFeature = e.selected[0];
+          const geometryType = selectedFeature.getGeometry();
+          console.log(geometryType);
           
+          if(geometryType.getType() === 'LineString'){
+            const length = getLength(geometryType, { projection: 'EPSG:4326' }) / 1000;
+            console.log(`Length: ${length} km`);
+          }else if(geometryType.getType() === 'Polygon'){
+            const area = getArea(geometryType, { projection: 'EPSG:4326' }) / 1000000;
+            console.log(`Area: ${area} km²`);}
           const pointData = selectedFeature.get('pointData');
+          const pointDataExt = {...pointData};
+          let length = null;
+          let area = null;
+          let size = null;
+
+          if (geometryType.getType() === 'LineString') {
+              length = getLength(geometryType, { projection: 'EPSG:3857' }) / 1000; 
+              size = length.toFixed(2) + ' km';
+          } else if (geometryType.getType() === 'Polygon') {
+              area = getArea(geometryType, { projection: 'EPSG:3857' }) / 1000000; 
+              size = area.toFixed(2) + ' km²';
+          }
+
+          // Yeni nesneye özellikleri ekle
+          if (length !== null) pointDataExt.length = length.toFixed(2) + ' km';
+          if (area !== null) pointDataExt.area = area.toFixed(2) + ' km²';
+          pointDataExt.size = size;
+
+
+          console.log(pointDataExt);
           if(pointData){
             //console.log(pointData)
-            dispatch(setFeature(pointData));
+            dispatch(setFeature(pointDataExt));
             if (!selectedFeature.getId()) {
               selectedFeature.setId(pointData.id);
             }
